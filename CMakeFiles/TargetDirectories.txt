@@ -1,0 +1,4 @@
+/home/xitong/sylar/workspace/sylar/CMakeFiles/rebuild_cache.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/edit_cache.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/test_config.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir
