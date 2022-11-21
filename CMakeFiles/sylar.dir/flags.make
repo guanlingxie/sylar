@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC
 
 CXX_DEFINES = -Dsylar_EXPORTS
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/. 
 

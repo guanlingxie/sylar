@@ -6,9 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/xitong/sylar/workspace/sylar/sylar/config.h
+/home/xitong/sylar/workspace/sylar/tests/test_config.cc
+sylar/config.h
+/home/xitong/sylar/workspace/sylar/tests/sylar/config.h
+sylar/log.h
+/home/xitong/sylar/workspace/sylar/tests/sylar/log.h
+sylar/util.h
+/home/xitong/sylar/workspace/sylar/tests/sylar/util.h
+yaml-cpp/yaml.h
+-
+
+sylar/config.h
 log.h
-/home/xitong/sylar/workspace/sylar/sylar/log.h
+sylar/log.h
 memory
 -
 exception
@@ -20,11 +30,11 @@ sstream
 boost/lexical_cast.hpp
 -
 
-/home/xitong/sylar/workspace/sylar/sylar/log.h
+sylar/log.h
 singleton.h
-/home/xitong/sylar/workspace/sylar/sylar/singleton.h
+sylar/singleton.h
 util.h
-/home/xitong/sylar/workspace/sylar/sylar/util.h
+sylar/util.h
 string
 -
 memory
@@ -44,11 +54,11 @@ vector
 map
 -
 
-/home/xitong/sylar/workspace/sylar/sylar/singleton.h
+sylar/singleton.h
 memory
 -
 
-/home/xitong/sylar/workspace/sylar/sylar/util.h
+sylar/util.h
 pthread.h
 -
 sys/syscall.h
@@ -57,12 +67,4 @@ sys/types.h
 -
 unistd.h
 -
-
-/home/xitong/sylar/workspace/sylar/tests/test_config.cc
-../sylar/config.h
-/home/xitong/sylar/workspace/sylar/sylar/config.h
-../sylar/log.h
-/home/xitong/sylar/workspace/sylar/sylar/log.h
-../sylar/util.h
-/home/xitong/sylar/workspace/sylar/sylar/util.h
 

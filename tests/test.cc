@@ -1,5 +1,5 @@
-#include "../sylar/log.h"
-#include "../sylar/util.h"
+#include "sylar/log.h"
+#include "sylar/util.h"
 #include <iostream>
 
 
