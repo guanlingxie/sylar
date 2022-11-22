@@ -29,6 +29,8 @@ sstream
 -
 boost/lexical_cast.hpp
 -
+yaml-cpp/yaml.h
+-
 
 sylar/log.h
 singleton.h

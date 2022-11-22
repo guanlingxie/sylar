@@ -7,6 +7,7 @@
 #include <map>
 #include <sstream>
 #include <boost/lexical_cast.hpp>
+#include <yaml-cpp/yaml.h>
 
 namespace sylar{
 
@@ -15,7 +16,9 @@ class ConfigVarBase
 public:
     typedef std::shared_ptr<ConfigVarBase> ptr;
     ConfigVarBase(const std::string &name,const std::string &description = "")
-    :m_name(name),m_description(description){}
+    :m_name(name),m_description(description){
+        std::transform(m_name.begin(),m_name.end(),m_name.begin(),::towlower);
+    }
     virtual ~ConfigVarBase(){}
 
     const std::string &getName() const {return m_name;}
@@ -29,7 +32,58 @@ protected:
 private:
 };
 
+//F from type -> to type
+template<typename F,class T>
+class LexicalCast
+{
+public:
+    T operator()(const F &f)
+    {
+        return boost::lexical_cast<T>(f);
+    }
+};
+
 template<typename T>
+class LexicalCast<std::string,std::vector<T>>
+{
+public:
+    std::vector<T> operator()(const std::string &v)
+    {
+        YAML::Node node = YAML::Load(v);
+        typename std::vector<T> vec;
+        std::stringstream ss;
+        for(size_t i = 0;i < node.size();++i)
+        {
+            ss.str("");
+            ss << node[i];
+            vec.push_back(LexicalCast<std::string, T>()(ss.str()));
+        }
+        return vec;
+    }
+};
+
+template<typename T>
+class LexicalCast<std::vector<T>, std::string>
+{
+public:
+    std::string operator()(const std::vector<T> &v)
+    {
+        YAML::Node node;
+        for(auto &i : v)
+        {
+            node.push_back(YAML::Load(LexicalCast<T, std::string>()(i)));
+        }
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
+    }
+};
+
+
+//FromStr T operator()(const std::string &)
+//ToStr std::string operator()(const T &)
+template<   typename T, typename FromStr = LexicalCast<std::string,T>, 
+            typename ToStr = LexicalCast<T,std::string>>
 class ConfigVar : public ConfigVarBase
 {
 public:
@@ -41,7 +95,8 @@ public:
     std::string toString() override
     {
         try{
-            return boost::lexical_cast<std::string>(m_val);
+            //return boost::lexical_cast<std::string>(m_val);
+            return ToStr()(m_val);
         }catch(std::exception &e)
         {   
             SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ConfigVar::toString exception"
@@ -52,7 +107,8 @@ public:
     bool fromString(const std::string &val) override
     {
         try{
-            m_val = boost::lexical_cast<T>(val);
+            //m_val = boost::lexical_cast<T>(val);
+            setValue(FromStr()(val));
         }catch(std::exception &e)
         {   
             SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ConfigVar::fromString exception"
@@ -68,6 +124,7 @@ private:
     T m_val;
 };
 
+
 class Config
 {
 public:
@@ -82,27 +139,31 @@ public:
             SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name = " << name << " exists";
             return tmp;
         }
-        if(name.find_first_not_of("abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._0123456789")
+        if(name.find_first_not_of("abcdefghiklmnopqrstuvwxyz._0123456789")
             != std::string::npos)
         {
             SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name invalid" << name; 
             throw std::invalid_argument(name);
         } 
         typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,default_value,description));
-        m_datas[name] = v;
+        s_datas[name] = v;
         return v;
     }
     
+
     template<typename T>
     static typename ConfigVar<T>::ptr Lookup(const std::string &name)
     {
-        auto it = m_datas.find(name);
-        if(it == m_datas.end())
+        auto it = s_datas.find(name);
+        if(it == s_datas.end())
             return nullptr;
         return std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
     }
+
+    static void LoadFromYaml(const YAML::Node &root);
+    static ConfigVarBase::ptr LookupBase(const std::string &name);
 private:
-    static ConfigVarMap m_datas;
+    static ConfigVarMap s_datas;
 };
 }
 
