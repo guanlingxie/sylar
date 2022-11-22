@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(sylar)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_CXX_FLAG = "$ENV{CXXFLAGS} -rdynamic -O0 -ggdb -std=c++17 -Wall -Wno-deprecated -Werror -Wno_unused-function")
+set(CMAKE_CXX_FLAG = "$ENV{CXXFLAGS} -rdynamic -O0 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno_unused-function")
 
 include_directories(.)
 set(LIB_SRC

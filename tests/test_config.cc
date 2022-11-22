@@ -56,7 +56,7 @@ void test_config()
             SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << #prefix " " #name ": "<< i;\
         SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "\n" << g_var->toString();\
     }
-    
+
 #define XXMAP(g_var, name, prefix) \
     {\
         auto &v = g_var->getValue();\
@@ -69,7 +69,7 @@ void test_config()
     //XX(g_int_set_value_config,int_set,before);
     //XX(g_int_unordered_set_value_config,int_unordered_set,before)
     //XXMAP(g_int_map_value_config,int_map,before)
-    XXMAP(g_int_unordered_map_value_config,int_unordered_map,before);
+    //XXMAP(g_int_unordered_map_value_config,int_unordered_map,before);
     YAML::Node root = YAML::LoadFile("/home/xitong/sylar/workspace/sylar/bin/conf/log.yml");
     sylar::Config::LoadFromYaml(root);
     
@@ -79,7 +79,7 @@ void test_config()
     //XX(g_int_set_value_config,int_set,after);
     //XX(g_int_unordered_set_value_config,int_unordered_set,after)
     //XXMAP(g_int_map_value_config,int_map,after)
-    XXMAP(g_int_unordered_map_value_config,int_unordered_map,after);
+    //XXMAP(g_int_unordered_map_value_config,int_unordered_map,after);
 
 }
 void test_yaml()
@@ -89,12 +89,84 @@ void test_yaml()
     //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << root;
 
 }
+
+
+class Person
+{
+public:
+    std::string m_name = "";
+    int m_age = 0;
+    bool m_sex = 0;
+    std::string toString () const
+    {
+        std::stringstream ss;
+        ss  << "[Person name = " << m_name  
+            << " age = " << m_age
+            << " sex = " << m_sex
+            << "]";
+        return ss.str();
+    }
+    bool operator==(const Person &p) const
+    {
+        return m_name == p.m_name && m_age == p.m_age && m_sex == p.m_sex;
+    }
+};
+sylar::ConfigVar<Person>::ptr g_person_config =
+    sylar::Config::Lookup("class.person",Person(),"class person");
+
+void test_class()
+{
+    g_person_config->addListener(10, [](const Person &old_value, const Person &new_value){
+        SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "\n" << old_value.toString() << "\n" << new_value.toString();
+    });
+    //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "before:" << g_person_config->getValue().toString()  << "-" << g_person_config->toString();
+    YAML::Node root = YAML::LoadFile("/home/xitong/sylar/workspace/sylar/bin/conf/config_log.yml");
+    sylar::Config::LoadFromYaml(root);
+    //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "before:" << g_person_config->getValue().toString()  << "-" << g_person_config->toString();
+}
+
+namespace sylar{
+
+template<>
+class LexicalCast<std::string,Person>
+{
+public:
+    Person operator()(const std::string &v)
+    {
+        YAML::Node node = YAML::Load(v);
+        Person p;
+        p.m_name = node["name"].as<std::string>();
+        p.m_age = node["age"].as<int>();
+        p.m_sex = node["sex"].as<bool>();
+        return p;
+    }
+};
+
+template<>
+class LexicalCast<Person, std::string>
+{
+public:
+    std::string operator()(const Person &p)
+    {
+        YAML::Node node;
+        node["name"] = p.m_name;
+        node["age"] = p.m_age;
+        node["sex"] = p.m_sex;
+        std::stringstream ss;
+        ss << node;
+        return ss.str();
+    }
+};
+
+}
+
 int main()
 {
     //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << g_int_value_config->toString();
     //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << g_float_value_config->getValue();
     //test_yaml();
 
-    test_config();
+    //test_config();
+    test_class();
     return 0;
 }
