@@ -24,6 +24,7 @@ static void ListAllMember(  const std::string &prefix,
         SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "Config invalid name: " << prefix << " : " << node;
         return ;
     }
+    //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << prefix << "***";
     output.push_back(std::make_pair(prefix,node));
     if(node.IsMap())
     {
@@ -31,6 +32,7 @@ static void ListAllMember(  const std::string &prefix,
         {
             ListAllMember(prefix.empty() ? it->first.Scalar() : prefix + "." + it->first.Scalar(), it->second,output);
         }
+        
     }
 }                                
 

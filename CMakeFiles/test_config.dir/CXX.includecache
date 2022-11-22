@@ -23,13 +23,23 @@ memory
 -
 exception
 -
-map
--
 sstream
 -
 boost/lexical_cast.hpp
 -
 yaml-cpp/yaml.h
+-
+vector
+-
+map
+-
+set
+-
+unordered_map
+-
+unordered_set
+-
+list
 -
 
 sylar/log.h
