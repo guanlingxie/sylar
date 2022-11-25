@@ -2,6 +2,7 @@
 #define __CONFIG_H__
 
 #include "log.h"
+#include "thread.h"
 #include <memory>
 #include <exception>
 
@@ -23,7 +24,7 @@ class ConfigVarBase
 public:
     typedef std::shared_ptr<ConfigVarBase> ptr;
     ConfigVarBase(const std::string &name,const std::string &description = "")
-    :m_name(name),m_description(description){
+        :m_name(name),m_description(description){
         std::transform(m_name.begin(),m_name.end(),m_name.begin(),::towlower);
     }
     virtual ~ConfigVarBase(){}
@@ -275,6 +276,7 @@ template<   typename T, typename FromStr = LexicalCast<std::string,T>,
 class ConfigVar : public ConfigVarBase
 {
 public:
+    typedef RWMutex RWMutexType;
     typedef std::shared_ptr<ConfigVar> ptr;
     typedef std::function<void (const T &old_value,const T &new_value)> on_change_cb;
 
@@ -294,6 +296,7 @@ public:
         }
         return "";
     }
+
     bool fromString(const std::string &val) override
     {
         try{
@@ -304,43 +307,59 @@ public:
             SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ConfigVar::fromString exception"
             << e.what() << " convert : string to " << typeid(m_val).name();
         }
+        //std::cout << sylar::LoggerMgr::GetInstance()->toYamlString();
         return false;
     }
 
-    const T getValue() const {return m_val;};
+    const T getValue() const {
+        RWMutexType::ReadLock lock(m_mutex);
+        return m_val;
+    }
     void setValue(const T &v)
     {
-        if(v == m_val)
-            return;
-        for(auto &i : m_cbs)
         {
-            i.second(m_val,v);
+            RWMutexType::ReadLock lock(m_mutex);
+            if(v == m_val)
+                return;
+            for(auto &i : m_cbs)
+            {
+                i.second(m_val,v);
+            }
         }
+        RWMutexType::WriteLock lock(m_mutex);
         m_val = v;
     }
     std::string getTypename() const override {return typeid(T).name();}
-    void addListener(uint64_t key, on_change_cb cb)
+    u_int64_t addListener(on_change_cb cb)
     {
-        m_cbs[key] = cb;
+        static uint64_t s_fun_id = 0;
+        RWMutexType::WriteLock lock(m_mutex);
+        ++s_fun_id;
+        m_cbs[s_fun_id] = cb;
+        return s_fun_id;
     }
-    
+
     void delListener(uint64_t key)
     {
+        RWMutexType::WriteLock lock(m_mutex);
         m_cbs.erase(key);
     }
 
     void clearListener()
     {
+        RWMutexType::WriteLock lock(m_mutex);
         m_cbs.clear();
     }
 
     on_change_cb getListener(uint64_t key)
     {
+        RWMutexType::ReadLock lock(m_mutex);
         auto it = m_cbs.find(key);
         return it == m_cbs.end() ? nullptr : it->second;
     }
 private:
     T m_val;
+    RWMutexType m_mutex;
     std::map<uint64_t,on_change_cb> m_cbs;
 };
 
@@ -349,7 +368,7 @@ class Config
 {
 public:
     typedef std::unordered_map<std::string, ConfigVarBase::ptr> ConfigVarMap;
-
+    typedef RWMutex RWMutexType;
     template<typename T>
     static typename ConfigVar<T>::ptr Lookup(const std::string &name,
         const T&default_value, const std::string &description = " ")
@@ -360,17 +379,20 @@ public:
         //     return tmp;
         // }
         //std::transform(name.begin(),name.end(),name.begin(),::tolower);
-        auto it = s_datas.find(name);
-        if(it != s_datas.end())
         {
-            auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
-            if(tmp)
+            RWMutexType::ReadLock lock(GetMutex());
+            auto it = GetDatas().find(name);
+            if(it != GetDatas().end())
             {
-                SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name=" << name << "exists";
-                return tmp;
-            }else{
-                SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "Lookup name=" << name << "exists but type not " << typeid(T).name() << " real_type : " << it->second->getTypename();
-                return nullptr;
+                auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
+                if(tmp)
+                {
+                    SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name=" << name << "exists";
+                    return tmp;
+                }else{
+                    SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "Lookup name=" << name << "exists but type not " << typeid(T).name() << " real_type : " << it->second->getTypename();
+                    return nullptr;
+                }
             }
         }
         if(name.find_first_not_of("abcdefghiklmnopqrstuvwxyz._0123456789")
@@ -380,7 +402,8 @@ public:
             throw std::invalid_argument(name);
         } 
         typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,default_value,description));
-        s_datas[name] = v;
+        RWMutexType::WriteLock lock(GetMutex());
+        GetDatas()[name] = v;
         return v;
     }
     
@@ -388,16 +411,28 @@ public:
     template<typename T>
     static typename ConfigVar<T>::ptr Lookup(const std::string &name)
     {
-        auto it = s_datas.find(name);
-        if(it == s_datas.end())
+        RWMutexType::ReadLock lock(GetMutex());
+        auto it = GetDatas().find(name);
+        if(it == GetDatas().end())
             return nullptr;
         return std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
     }
 
     static void LoadFromYaml(const YAML::Node &root);
     static ConfigVarBase::ptr LookupBase(const std::string &name);
+
+    static void Visit(std::function<void(ConfigVarBase::ptr)> cb);
 private:
-    static ConfigVarMap s_datas;
+    static ConfigVarMap &GetDatas()
+    {
+        static ConfigVarMap s_datas;
+        return s_datas;
+    }
+    static RWMutexType &GetMutex()
+    {
+        static RWMutexType s_mutex;
+        return s_mutex;
+    }
 };
 }
 

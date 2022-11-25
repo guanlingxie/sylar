@@ -2,12 +2,13 @@
 
 namespace sylar
 {
-Config::ConfigVarMap Config::s_datas;
+
 
 ConfigVarBase::ptr Config::LookupBase(const std::string &name)
 {
-    auto it = s_datas.find(name);
-    return it == s_datas.end() ? nullptr : it->second;
+    RWMutexType::ReadLock lock(GetMutex());
+    auto it = Config::GetDatas().find(name);
+    return it == Config::GetDatas().end() ? nullptr : it->second;
 }
 /*
 "A.B"
@@ -38,6 +39,7 @@ static void ListAllMember(  const std::string &prefix,
 
 void Config::LoadFromYaml(const YAML::Node &root)
 {
+
     std::list<std::pair<std::string, const YAML::Node>> all_nodes;
     ListAllMember("", root, all_nodes);
     for(auto &i : all_nodes)
@@ -58,6 +60,17 @@ void Config::LoadFromYaml(const YAML::Node &root)
                 var->fromString(ss.str());
             }
         }
+    }
+    //std::cout << sylar::LoggerMgr::GetInstance()->toYamlString();
+}
+
+void Config::Visit(std::function<void(ConfigVarBase::ptr)> cb)
+{
+    RWMutexType::ReadLock lock(GetMutex());
+    ConfigVarMap &m = GetDatas();
+    for(auto it = m.begin();it != m.end();++it)
+    {
+        cb(it->second);
     }
 }
 

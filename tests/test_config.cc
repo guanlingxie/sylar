@@ -1,7 +1,9 @@
 #include "sylar/config.h"
 #include "sylar/log.h"
 #include "sylar/util.h"
+
 #include <yaml-cpp/yaml.h>
+#include <iostream>
 
 sylar::ConfigVar<int>::ptr g_int_value_config =
     sylar::Config::Lookup("system.port",(int)8080,"system port");
@@ -114,14 +116,16 @@ public:
 sylar::ConfigVar<Person>::ptr g_person_config =
     sylar::Config::Lookup("class.person",Person(),"class person");
 
+
 void test_class()
 {
-    g_person_config->addListener(10, [](const Person &old_value, const Person &new_value){
-        SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "\n" << old_value.toString() << "\n" << new_value.toString();
-    });
+    // g_person_config->addListener([](const Person &old_value, const Person &new_value){
+    //     SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "\n" << old_value.toString() << "\n" << new_value.toString();
+    // });
     //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "before:" << g_person_config->getValue().toString()  << "-" << g_person_config->toString();
     YAML::Node root = YAML::LoadFile("/home/xitong/sylar/workspace/sylar/bin/conf/config_log.yml");
     sylar::Config::LoadFromYaml(root);
+    
     //SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "before:" << g_person_config->getValue().toString()  << "-" << g_person_config->toString();
 }
 
@@ -159,6 +163,13 @@ public:
 };
 
 }
+void test_log()
+{
+    //std::cout << sylar::LoggerMgr::GetInstance()->toYamlString() << "\n\n\n" << std::endl;
+    YAML::Node root = YAML::LoadFile("/home/xitong/sylar/workspace/sylar/bin/conf/config_log.yml");
+    sylar::Config::LoadFromYaml(root);
+    std::cout << sylar::LoggerMgr::GetInstance()->toYamlString() << std::endl;
+}
 
 int main()
 {
@@ -167,6 +178,7 @@ int main()
     //test_yaml();
 
     //test_config();
-    test_class();
+    //test_class();
+    //test_log();
     return 0;
 }

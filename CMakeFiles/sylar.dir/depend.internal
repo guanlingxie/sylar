@@ -6,12 +6,24 @@ CMakeFiles/sylar.dir/sylar/config.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/config.h
  /home/xitong/sylar/workspace/sylar/sylar/log.h
  /home/xitong/sylar/workspace/sylar/sylar/singleton.h
+ /home/xitong/sylar/workspace/sylar/sylar/thread.h
  /home/xitong/sylar/workspace/sylar/sylar/util.h
 CMakeFiles/sylar.dir/sylar/log.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/config.h
  /home/xitong/sylar/workspace/sylar/sylar/log.cc
  /home/xitong/sylar/workspace/sylar/sylar/log.h
  /home/xitong/sylar/workspace/sylar/sylar/singleton.h
+ /home/xitong/sylar/workspace/sylar/sylar/thread.h
+ /home/xitong/sylar/workspace/sylar/sylar/util.h
+CMakeFiles/sylar.dir/sylar/thread.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/log.h
+ /home/xitong/sylar/workspace/sylar/sylar/singleton.h
+ /home/xitong/sylar/workspace/sylar/sylar/thread.cc
+ /home/xitong/sylar/workspace/sylar/sylar/thread.h
  /home/xitong/sylar/workspace/sylar/sylar/util.h
 CMakeFiles/sylar.dir/sylar/util.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/log.h
+ /home/xitong/sylar/workspace/sylar/sylar/singleton.h
+ /home/xitong/sylar/workspace/sylar/sylar/thread.h
  /home/xitong/sylar/workspace/sylar/sylar/util.cc
  /home/xitong/sylar/workspace/sylar/sylar/util.h

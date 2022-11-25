@@ -1,8 +1,9 @@
 #ifndef __SINGLENTON_H__
 #define __SINGLENTON_H__
+
 #include <memory>
 
-namespace{
+namespace sylar{
 
 template <typename T,typename X = void,int N = 0>
 class Singleton

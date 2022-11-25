@@ -15,10 +15,14 @@ sylar/util.h
 /home/xitong/sylar/workspace/sylar/tests/sylar/util.h
 yaml-cpp/yaml.h
 -
+iostream
+-
 
 sylar/config.h
 log.h
 sylar/log.h
+thread.h
+sylar/thread.h
 memory
 -
 exception
@@ -49,6 +53,8 @@ singleton.h
 sylar/singleton.h
 util.h
 sylar/util.h
+thread.h
+sylar/thread.h
 string
 -
 memory
@@ -72,6 +78,18 @@ sylar/singleton.h
 memory
 -
 
+sylar/thread.h
+thread
+-
+memory
+-
+functional
+-
+pthread.h
+-
+semaphore.h
+-
+
 sylar/util.h
 pthread.h
 -
@@ -80,5 +98,9 @@ sys/syscall.h
 sys/types.h
 -
 unistd.h
+-
+vector
+-
+string
 -
 
