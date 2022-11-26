@@ -4,6 +4,7 @@
 CMakeFiles/test_thread.dir/tests/test_thread.cc.o
  /home/xitong/sylar/workspace/sylar/tests/test_thread.cc
  sylar/config.h
+ sylar/fiber.h
  sylar/log.h
  sylar/macro.h
  sylar/singleton.h

@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/xitong/sylar/workspace/sylar/sylar/config.cc
-config.h
-/home/xitong/sylar/workspace/sylar/sylar/config.h
-
 /home/xitong/sylar/workspace/sylar/sylar/config.h
 log.h
 /home/xitong/sylar/workspace/sylar/sylar/log.h
@@ -88,14 +84,6 @@ map
 memory
 -
 
-/home/xitong/sylar/workspace/sylar/sylar/thread.cc
-thread.h
-/home/xitong/sylar/workspace/sylar/sylar/thread.h
-log.h
-/home/xitong/sylar/workspace/sylar/sylar/log.h
-util.h
-/home/xitong/sylar/workspace/sylar/sylar/util.h
-
 /home/xitong/sylar/workspace/sylar/sylar/thread.h
 thread
 -
@@ -106,16 +94,6 @@ functional
 pthread.h
 -
 semaphore.h
--
-
-/home/xitong/sylar/workspace/sylar/sylar/util.cc
-util.h
-/home/xitong/sylar/workspace/sylar/sylar/util.h
-log.h
-/home/xitong/sylar/workspace/sylar/sylar/log.h
-stdint.h
--
-execinfo.h
 -
 
 /home/xitong/sylar/workspace/sylar/sylar/util.h

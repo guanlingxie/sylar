@@ -13,6 +13,7 @@ set(LIB_SRC
     sylar/util.cc
     sylar/config.cc
     sylar/thread.cc
+    sylar/fiber.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -25,20 +26,25 @@ set(LIB_LIB
     yaml-cpp 
 )
 
-add_executable(test_config tests/test_config.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_config)
-target_link_libraries(test_config sylar ${LIB_LIB})
+# add_executable(test_config tests/test_config.cc)
+# #add_dependencies(test_config sylar)
+# force_redefine_file_macro_for_sources(test_config)
+# target_link_libraries(test_config sylar ${LIB_LIB})
 
-add_executable(test_thread tests/test_thread.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_thread)
-target_link_libraries(test_thread sylar ${LIB_LIB})
+# add_executable(test_thread tests/test_thread.cc)
+# #add_dependencies(test_config sylar)
+# force_redefine_file_macro_for_sources(test_thread)
+# target_link_libraries(test_thread sylar ${LIB_LIB})
 
-add_executable(test_util tests/test_util.cc)
+# add_executable(test_util tests/test_util.cc)
+# #add_dependencies(test_config sylar)
+# force_redefine_file_macro_for_sources(test_util)
+# target_link_libraries(test_util sylar ${LIB_LIB})
+
+add_executable(test_fiber tests/test_fiber.cc)
 #add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_util)
-target_link_libraries(test_util sylar ${LIB_LIB})
+force_redefine_file_macro_for_sources(test_fiber)
+target_link_libraries(test_fiber sylar ${LIB_LIB})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

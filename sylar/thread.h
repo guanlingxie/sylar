@@ -219,6 +219,9 @@ public:
     const std::string &getName() const{return m_name;}
     pid_t getId()const {return m_id;}
     void join();
+    void setCb(std::function<void()> cb){
+        m_cb = cb;
+    }
     static Thread *GetThis();
     static const std::string &GetName();
     static void SetName(const std::string &name);
