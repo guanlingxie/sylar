@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/xitong/sylar/workspace/sylar/tests/test_fiber.cc
+/home/xitong/sylar/workspace/sylar/tests/test_scheduler.cc
 sylar/sylar.h
 /home/xitong/sylar/workspace/sylar/tests/sylar/sylar.h
 

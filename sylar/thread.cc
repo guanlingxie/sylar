@@ -71,6 +71,7 @@ void *Thread::run(void *arg)
 
     std::function<void()> cb;
     cb.swap(thread->m_cb);
+    
     thread->m_semaphore.notify();
     cb();
     return 0;

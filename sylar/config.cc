@@ -1,8 +1,8 @@
 #include "config.h"
 
+//
 namespace sylar
 {
-
 
 ConfigVarBase::ptr Config::LookupBase(const std::string &name)
 {
@@ -11,7 +11,7 @@ ConfigVarBase::ptr Config::LookupBase(const std::string &name)
     return it == Config::GetDatas().end() ? nullptr : it->second;
 }
 /*
-"A.B"
+"A.B" 
 A: 
     B:
     C:

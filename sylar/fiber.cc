@@ -2,9 +2,12 @@
 #include "config.h"
 #include "log.h"
 #include "macro.h"
+#include "scheduler.h"
 #include <atomic>
 
+
 static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
+
 
 namespace sylar
 {
@@ -51,11 +54,11 @@ Fiber::Fiber()
         SYLAR_ASSERT2(false,"getcontext");
     }
     ++s_fiber_count;
-    SYLAR_LOG_INFO(g_logger) << "construct m_id = " << m_id;
+    //SYLAR_LOG_INFO(g_logger) << "construct m_id = " << m_id;
 }
 
 
-Fiber::Fiber(std::function<void()> cb,size_t stacksize):m_id(++s_fiber_id),m_cb(cb)
+Fiber::Fiber(std::function<void()> cb,size_t stacksize, bool use_caller):m_id(++s_fiber_id),m_cb(cb)
 {
     ++s_fiber_count;
     m_stacksize = stacksize ? stacksize : g_fiber_stack_size->getValue();
@@ -67,9 +70,11 @@ Fiber::Fiber(std::function<void()> cb,size_t stacksize):m_id(++s_fiber_id),m_cb(
     m_ctx.uc_link = nullptr;
     m_ctx.uc_stack.ss_sp = m_stack;
     m_ctx.uc_stack.ss_size = m_stacksize;
-    makecontext(&m_ctx,Fiber::MainFunc,0);
-
-    SYLAR_LOG_INFO(g_logger) << "construct m_id = " << m_id;
+    if(!use_caller)
+        makecontext(&m_ctx,Fiber::MainFunc,0);
+    else    
+        makecontext(&m_ctx,Fiber::CallMainFunc,0);
+    //SYLAR_LOG_INFO(g_logger) << "construct m_id = " << m_id;
 }
 
 Fiber::~Fiber()
@@ -83,11 +88,12 @@ Fiber::~Fiber()
         SYLAR_ASSERT(!m_cb);
         SYLAR_ASSERT(m_state == EXEC);
 
+        //if the fiber is main fiber, need destory the fiber's
         Fiber *cur = t_fiber;
         if(cur == this)
             SetThis(nullptr);
     }
-    SYLAR_LOG_INFO(g_logger) << "deconstruct m_id = " << m_id;
+    //SYLAR_LOG_INFO(g_logger) << "deconstruct m_id = " << m_id;
 }
 // reset fiber function
 void Fiber::reset(std::function<void()> cb)
@@ -105,27 +111,47 @@ void Fiber::reset(std::function<void()> cb)
     makecontext(&m_ctx,Fiber::MainFunc,0);
     m_state = INIT;
 }
+
 // swap fiber to exec
 void Fiber::swapIn()
 {
     SetThis(this);
     SYLAR_ASSERT(m_state != EXEC);
     m_state = EXEC;
+    if(swapcontext(&Scheduler::GetMainFiber()->m_ctx,&m_ctx))
+    {
+        SYLAR_ASSERT2(false,"swapcontext");
+    }
+}
+
+void Fiber::call()
+{
+    SetThis(this);
+    m_state = EXEC;
     if(swapcontext(&t_threadFiber->m_ctx,&m_ctx))
     {
         SYLAR_ASSERT2(false,"swapcontext");
     }
-
 }
-// 
-void Fiber::swapOut()
+
+void Fiber::back()
 {
+    
     SetThis(t_threadFiber.get());
     if(swapcontext(&m_ctx,&t_threadFiber->m_ctx))
     {
         SYLAR_ASSERT2(false,"swapcontext");
     }
-    
+}
+// 
+void Fiber::swapOut()
+{
+   
+    SetThis(Scheduler::GetMainFiber());
+    if(swapcontext(&m_ctx,&Scheduler::GetMainFiber()->m_ctx))
+    {
+        SYLAR_ASSERT2(false,"swapcontext");
+    }
 }
 
 void Fiber::SetThis(Fiber *f)
@@ -177,16 +203,50 @@ void Fiber::MainFunc()
     }catch(std::exception &ex)
     {
         cur->m_state = EXCEPT;
-        SYLAR_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what();
+        SYLAR_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
+            << " fiber id = " << cur->getId()
+            << std::endl
+            << sylar::BacktraceToString();
     }catch(...)
     {
         cur->m_state = EXCEPT;
-        SYLAR_LOG_ERROR(g_logger) << "Fiber Except: ";
+        SYLAR_LOG_ERROR(g_logger) << "Fiber Except: "
+            << std::endl
+            << sylar::BacktraceToString();
     }
     Fiber *row_ptr = cur.get();
     cur.reset();
     row_ptr->swapOut();
+    SYLAR_ASSERT2(false,"never reach fiber_id=" + std::to_string(row_ptr->getId()));
 }
 
+
+void Fiber::CallMainFunc()
+{
+    Fiber::ptr cur = GetThis();
+    try
+    {
+        cur->m_cb();
+        cur->m_cb = nullptr;
+        cur->m_state = TERM;
+    }catch(std::exception &ex)
+    {
+        cur->m_state = EXCEPT;
+        SYLAR_LOG_ERROR(g_logger) << "Fiber Except: " << ex.what()
+            << " fiber id = " << cur->getId()
+            << std::endl
+            << sylar::BacktraceToString();
+    }catch(...)
+    {
+        cur->m_state = EXCEPT;
+        SYLAR_LOG_ERROR(g_logger) << "Fiber Except: "
+            << std::endl
+            << sylar::BacktraceToString();
+    }
+    Fiber *row_ptr = cur.get();
+    cur.reset();
+    row_ptr->back();
+    SYLAR_ASSERT2(false,"never reach fiber_id=" + std::to_string(row_ptr->getId()));
+}
 
 }
