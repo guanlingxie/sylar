@@ -20,3 +20,11 @@ CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/.
 
 # Custom defines: CMakeFiles/sylar.dir/sylar/scheduler.cc.o_DEFINES = __FILE__="sylar/scheduler.cc"
 
+# Custom defines: CMakeFiles/sylar.dir/sylar/iomanager.cc.o_DEFINES = __FILE__="sylar/iomanager.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/timer.cc.o_DEFINES = __FILE__="sylar/timer.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/hook.cc.o_DEFINES = __FILE__="sylar/hook.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/fd_manager.cc.o_DEFINES = __FILE__="sylar/fd_manager.cc"
+

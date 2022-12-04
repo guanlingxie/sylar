@@ -13,8 +13,10 @@
 namespace sylar
 {
 
+/// @brief 
 class Scheduler
 {
+    
 public:
     typedef std::shared_ptr<Scheduler> ptr;
     typedef Mutex MutexType;
@@ -29,6 +31,7 @@ public:
 
     void start();
     void stop();
+    
     template<class FiberOrCb>
     void schedule(FiberOrCb fc,int thread = -1)
     {
@@ -49,7 +52,8 @@ public:
             MutexType::Lock lock(m_mutex);
             while(begin != end)
             {
-                tickle = scheduleNoLock(&*begin) || need_tickle;
+                need_tickle = scheduleNoLock(&*begin, -1) || need_tickle;
+                ++begin;
             }
             if(need_tickle)
                 tickle();
@@ -59,10 +63,16 @@ protected:
     virtual void tickle();
     virtual bool stopping();
     virtual void idle();
-    virtual void run();
+    void run();
 
     void setThis();
+    bool hasIdleThreads(){return m_idleThreadCount > 0;}
 private:
+    /// @brief 
+    /// @tparam FiberOrCb 
+    /// @param fc 
+    /// @param thread 
+    /// @return 
     template<class FiberOrCb>
     bool scheduleNoLock(FiberOrCb fc,int thread)
     {

@@ -1,5 +1,7 @@
 /home/xitong/sylar/workspace/sylar/CMakeFiles/rebuild_cache.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/edit_cache.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/test_iomanager.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_scheduler.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_fiber.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/test_hook.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir

@@ -7,21 +7,18 @@
 #include <pthread.h>
 #include <semaphore.h>
 
+#include "noncopyable.h"
 
 namespace sylar
 {
 
-class Semaphore
+class Semaphore : public Noncopyable
 {
 public:
     Semaphore(uint32_t count = 0);
     ~Semaphore();
     void wait();
     void notify();
-private:
-    Semaphore(const Semaphore &) = delete;
-    Semaphore(const Semaphore &&) = delete;
-    Semaphore operator=(const Semaphore &) = delete;
 private:
     sem_t m_semaphore;
 };
@@ -62,7 +59,7 @@ private:
     bool m_locked = false;
 };
 
-class Mutex
+class Mutex : public Noncopyable
 {
 public:
     typedef ScopedLockImpl<Mutex> Lock;
@@ -156,7 +153,7 @@ private:
     bool m_locked = false;
 };
 
-class RWMutex
+class RWMutex : public Noncopyable
 {
 public:
     typedef ReadScopedLockImpl<RWMutex> ReadLock;
@@ -185,7 +182,7 @@ private:
     pthread_rwlock_t m_lock;
 };
 
-class Spinlock
+class Spinlock : public Noncopyable
 {
 public:
     typedef ScopedLockImpl<Spinlock> Lock;

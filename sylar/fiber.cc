@@ -138,6 +138,7 @@ void Fiber::back()
 {
     
     SetThis(t_threadFiber.get());
+    //t_threadFiber represent main fiber not scheduler fiber
     if(swapcontext(&m_ctx,&t_threadFiber->m_ctx))
     {
         SYLAR_ASSERT2(false,"swapcontext");
@@ -146,7 +147,7 @@ void Fiber::back()
 // 
 void Fiber::swapOut()
 {
-   
+    //SYLAR_LOG_INFO(g_logger) << "fiber id is" << m_id;
     SetThis(Scheduler::GetMainFiber());
     if(swapcontext(&m_ctx,&Scheduler::GetMainFiber()->m_ctx))
     {

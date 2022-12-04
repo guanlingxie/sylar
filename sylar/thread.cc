@@ -81,7 +81,6 @@ Thread::Thread(std::function<void()> cb, const std::string &name):m_cb(cb),m_nam
 {
     if(name.empty())
         m_name = "UNKNOW";
-    t_thread_name = m_name;
     int rt = pthread_create(&m_thread,nullptr,Thread::run,this);
     if(rt)
     {
