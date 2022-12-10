@@ -11,6 +11,7 @@ static thread_local sylar::Fiber *t_fiber = nullptr;
 namespace sylar
 {
 Scheduler::Scheduler(size_t threads, bool use_caller, const std::string &name)
+    :m_name(name)
 {
     SYLAR_ASSERT(threads > 0);
     if(use_caller)
@@ -129,7 +130,7 @@ void Scheduler::setThis()
 void Scheduler::run()
 {
     
-    SYLAR_LOG_INFO(g_logger) << "run";
+    //SYLAR_LOG_INFO(g_logger) << "run";
     set_hook_enable(true);
     //sleep(10);
     setThis();

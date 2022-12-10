@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/test_address.dir/tests/test_address.cc.o  -o bin/test_address  -Wl,-rpath,/home/xitong/sylar/workspace/sylar/lib lib/libsylar.so -lpthread -lyaml-cpp -ldl 

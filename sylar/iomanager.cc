@@ -305,7 +305,7 @@ void IOManager::idle()
     {
         if(stopping())
         {
-            SYLAR_LOG_INFO(g_logger) << "name = " << getName()<< "idle stopping exit";
+            SYLAR_LOG_INFO(g_logger) << "name = " << getName() << " idle stopping exit";
             break;
         }
 

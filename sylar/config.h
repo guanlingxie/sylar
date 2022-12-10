@@ -378,32 +378,34 @@ public:
         //     SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name = " << name << " exists";
         //     return tmp;
         // }
-        //std::transform(name.begin(),name.end(),name.begin(),::tolower);
+        
+        std::string tempString = name;
+        std::transform(tempString.begin(),tempString.end(),tempString.begin(),::tolower);
         {
             RWMutexType::ReadLock lock(GetMutex());
-            auto it = GetDatas().find(name);
+            auto it = GetDatas().find(tempString);
             if(it != GetDatas().end())
             {
                 auto tmp = std::dynamic_pointer_cast<ConfigVar<T>>(it->second);
                 if(tmp)
                 {
-                    SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name=" << name << "exists";
+                    SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name=" << tempString << "exists";
                     return tmp;
                 }else{
-                    SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "Lookup name=" << name << "exists but type not " << typeid(T).name() << " real_type : " << it->second->getTypename();
+                    SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "Lookup name=" << tempString << "exists but type not " << typeid(T).name() << " real_type : " << it->second->getTypename();
                     return nullptr;
                 }
             }
         }
-        if(name.find_first_not_of("abcdefghiklmnopqrstuvwxyz._0123456789")
+        if(tempString.find_first_not_of("abcdefghijklmnopqrstuvwxyz._0123456789")
             != std::string::npos)
         {
-            SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name invalid" << name; 
-            throw std::invalid_argument(name);
+            SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) << "Lookup name invalid " << tempString; 
+            throw std::invalid_argument(tempString);
         } 
-        typename ConfigVar<T>::ptr v(new ConfigVar<T>(name,default_value,description));
+        typename ConfigVar<T>::ptr v(new ConfigVar<T>(tempString,default_value,description));
         RWMutexType::WriteLock lock(GetMutex());
-        GetDatas()[name] = v;
+        GetDatas()[tempString] = v;
         return v;
     }
     

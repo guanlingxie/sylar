@@ -6,8 +6,16 @@
 #include "util.h"
 #include "log.h"
 
+#if defined __GNUC__ || defined __llvm__
+#   define SYLAR_LIKELY(x)      __builtin_expect(!!(x), 1)
+#   define SYLAR_UNLIKELY(x)    __builtin_expect(!!(x), 0)
+#else
+#   define SYLAR_LIKELY(X)      (X)
+#   define SYLAR_UNLIKELY(x)    (x)
+#endif
+
 #define SYLAR_ASSERT(x)\
-    if(!(x))\
+    if(SYLAR_UNLIKELY(!(x)))\
     {\
         SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ASSERTION: " << #x\
             << "\nbacktrace:\n"\
@@ -15,7 +23,7 @@
         assert(x);\
     }
 #define SYLAR_ASSERT2(x,w)\
-    if(!(x))\
+    if(SYLAR_UNLIKELY(!(x)))\
     {\
         SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) << "ASSERTION: " << #x\
             << "\n" << w\

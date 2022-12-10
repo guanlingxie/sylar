@@ -28,3 +28,19 @@ CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/.
 
 # Custom defines: CMakeFiles/sylar.dir/sylar/fd_manager.cc.o_DEFINES = __FILE__="sylar/fd_manager.cc"
 
+# Custom defines: CMakeFiles/sylar.dir/sylar/address.cc.o_DEFINES = __FILE__="sylar/address.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/socket.cc.o_DEFINES = __FILE__="sylar/socket.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/bytearray.cc.o_DEFINES = __FILE__="sylar/bytearray.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/http/http.cc.o_DEFINES = __FILE__="sylar/http/http.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/http/http11_parser.rl.cc.o_DEFINES = __FILE__="sylar/http/http11_parser.rl.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/http/httpclient_parser.rl.cc.o_DEFINES = __FILE__="sylar/http/httpclient_parser.rl.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/http/http_parser.cc.o_DEFINES = __FILE__="sylar/http/http_parser.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/tcp_server.cc.o_DEFINES = __FILE__="sylar/tcp_server.cc"
+

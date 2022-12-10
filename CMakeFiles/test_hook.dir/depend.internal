@@ -3,7 +3,10 @@
 
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o
  /home/xitong/sylar/workspace/sylar/tests/test_hook.cc
+ sylar/address.h
+ sylar/bytearray.h
  sylar/config.h
+ sylar/endian.h
  sylar/fiber.h
  sylar/hook.h
  sylar/iomanager.h
@@ -12,6 +15,7 @@ CMakeFiles/test_hook.dir/tests/test_hook.cc.o
  sylar/noncopyable.h
  sylar/scheduler.h
  sylar/singleton.h
+ sylar/socket.h
  sylar/sylar.h
  sylar/thread.h
  sylar/timer.h

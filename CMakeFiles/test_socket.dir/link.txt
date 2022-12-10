@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/test_socket.dir/tests/test_socket.cc.o  -o bin/test_socket  -Wl,-rpath,/home/xitong/sylar/workspace/sylar/lib lib/libsylar.so -lpthread -lyaml-cpp -ldl 

@@ -10,6 +10,12 @@
 #include "fiber.h"
 #include "scheduler.h"
 #include "iomanager.h"
+#include "address.h"
+#include "socket.h"
+#include "hook.h"
+#include "endian.h"
+#include "timer.h"
+#include "bytearray.h"
 
 
 #endif

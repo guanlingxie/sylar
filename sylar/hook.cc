@@ -87,7 +87,7 @@ struct timer_info{
 };
 
 template<typename OriginFun, typename ...Args>
-static ssize_t do_io(int fd, OriginFun fun, const char * hook_fun_name, uint32_t event, int timeout_so, Args&&...args)
+static ssize_t do_io(int fd, OriginFun fun, const char * hook_fun_name, uint32_t event, int timeout_so, Args&&... args)
 {
     if(!sylar::is_hook_enable())
         return fun(fd, std::forward<Args>(args)...);
@@ -298,6 +298,7 @@ int connect_with_timeout(int fd, const struct sockaddr *address, socklen_t addre
 
 int connect(int socket, const struct sockaddr *address,socklen_t address_len)
 {
+    //std::cout << " connect timeout "<<  sylar::s_connect_timeout << std::endl;
     return connect_with_timeout(socket, address, address_len, sylar::s_connect_timeout);
 }
 

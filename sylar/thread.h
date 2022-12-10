@@ -12,7 +12,7 @@
 namespace sylar
 {
 
-class Semaphore : public Noncopyable
+class Semaphore : Noncopyable
 {
 public:
     Semaphore(uint32_t count = 0);
@@ -59,7 +59,7 @@ private:
     bool m_locked = false;
 };
 
-class Mutex : public Noncopyable
+class Mutex : Noncopyable
 {
 public:
     typedef ScopedLockImpl<Mutex> Lock;
@@ -153,7 +153,7 @@ private:
     bool m_locked = false;
 };
 
-class RWMutex : public Noncopyable
+class RWMutex : Noncopyable
 {
 public:
     typedef ReadScopedLockImpl<RWMutex> ReadLock;
@@ -182,7 +182,7 @@ private:
     pthread_rwlock_t m_lock;
 };
 
-class Spinlock : public Noncopyable
+class Spinlock : Noncopyable
 {
 public:
     typedef ScopedLockImpl<Spinlock> Lock;
