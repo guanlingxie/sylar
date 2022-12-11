@@ -13,6 +13,8 @@ static sylar::ConfigVar<uint64_t>::ptr g_http_request_max_bodysize =
 static uint64_t s_http_request_buffersize;
 static uint64_t s_http_request_max_badysize;
 
+
+namespace {
 struct _RequestSizeIniter
 {
     _RequestSizeIniter()
@@ -31,12 +33,21 @@ struct _RequestSizeIniter
     }
 };
 static _RequestSizeIniter _initer;
+}
 
 namespace sylar
 {
 namespace http
 {
 
+uint64_t HttpRequestParser::GetHttpRequestBufferSize()
+{
+    return s_http_request_buffersize;
+}
+uint64_t HttpRequestParser::GetHttpRequestMaxBodysize()
+{
+    return s_http_request_max_badysize;
+}
 
 void on_request_method(void *data, const char *at, size_t length)
 {

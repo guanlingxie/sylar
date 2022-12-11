@@ -3,6 +3,10 @@
 #include "log.h"
 #include <string.h>
 #include <fstream>
+#include <iomanip>
+#include <sstream>
+#include <sys/types.h>
+#include <sys/socket.h>
 
 static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
  
@@ -44,20 +48,24 @@ void ByteArray::setIsLittleEndian(bool val)
 ByteArray::ByteArray(size_t base_size)
     :m_baseSize(base_size)
     ,m_capacity(base_size)
-    ,m_position(0)
+    ,m_readPosition(0)
+    ,m_writePosition(0)
     ,m_root(new Node(base_size))
     ,m_size(0)
-    ,m_cur(m_root)
+    ,m_readCur(m_root)
+    ,m_writeCur(m_root)
+    ,m_tail(m_root)
 {
 
 }
+
 ByteArray::~ByteArray()
 {
     while(m_root != nullptr)
     {
-        m_cur = m_root;
+        m_readCur = m_root;
         m_root = m_root->next;
-        delete m_cur;
+        delete m_readCur;
     }
 }
 //write
@@ -373,109 +381,100 @@ std::string ByteArray::readStringVint()
 //inner function
 void ByteArray::clear()
 {
-    m_position = m_size = 0;
+    m_readPosition = m_writePosition = 0;
     m_capacity = m_baseSize;
+    m_size = 0;
     Node *tmp = m_root->next;
     while(tmp)
     {
-        m_cur = tmp;
+        m_readCur = tmp;
         tmp = tmp->next;
-        delete m_cur;
+        delete m_readCur;
     }
-    m_cur = m_root;
     m_root->next = nullptr;
+    m_readCur = m_writeCur = m_tail = m_root;
 }
+
+void ByteArray::setReadPosition(size_t v)
+{
+    if(v > m_size)
+    {
+        throw std::out_of_range("setReadPosition function: readPosition out of range");
+    }
+    m_readCur = m_root;
+    m_readPosition = v;
+    while(v >= m_baseSize)
+    {
+        v -= m_baseSize;
+        m_readCur = m_readCur->next;
+    }
+    
+}
+void ByteArray::setWritePosition(size_t v)
+{
+    if(v >= m_capacity)
+    {
+        addCapacity(v - m_writePosition);
+    }
+    m_writeCur = m_root;
+    m_writePosition = v;
+    while(v >= m_baseSize)
+    {
+        v -= m_baseSize;
+        m_writeCur = m_writeCur->next;
+    }
+    m_size = std::max(m_writePosition, m_size);
+}
+
+
 void ByteArray::write(const void *buf, size_t size)
 {
     if(size == 0)
         return;
-    size_t npos = m_position % m_baseSize;
-    size_t ncap = m_cur->size - npos;
-    size_t bpos = 0;
+    addCapacity(size);
+    size_t bpos = m_writePosition % m_baseSize;
+    size_t npos = 0;
+    m_writePosition += size;
     while(size > 0)
     {
-        if(ncap >= size)
+        if(size >= m_baseSize - bpos)
         {
-            memcpy(m_cur->ptr + npos, (char *)buf + bpos, size);
-            m_position += size;
-            if(m_cur->size == (npos + size))
-            {
-                if(m_cur->next == nullptr)
-                {
-                    m_cur->next = new Node(m_baseSize);
-                }
-                m_cur = m_cur->next;
-            }
-            bpos += size;
-            size = 0;
+            memcpy(m_writeCur->ptr + bpos, (char *)buf + npos, m_baseSize - bpos);
+            m_writeCur = m_writeCur->next;
+            npos += m_baseSize - bpos;
+            size -= m_baseSize - bpos;
+            bpos = 0;
         }else{
-            memcpy(m_cur->ptr + npos, (char *)buf + bpos, ncap);
-            m_position += ncap;
-            bpos += ncap;
-            size -= ncap;
-            npos = 0;
-            if(m_cur->next == nullptr)
-            {
-                m_cur->next = new Node(m_baseSize);
-            }
-            m_cur = m_cur->next;
-            ncap = m_cur->size;
+            memcpy(m_writeCur->ptr + bpos, (char *)buf + npos, size);
+            size = 0;
         }
     }
-    if(m_position > m_size)
-        m_size = m_position;
+    m_size = std::max(m_size, m_writePosition);
 }
 
 void ByteArray::read(void *buf, size_t size)
 {
-    if(size > getReadSize())
-    {
-        throw std::out_of_range("not enough len");
-    }
-    size_t npos = m_position % m_baseSize;
-    size_t ncap = m_baseSize - npos;
-    size_t bpos = 0;
-
+    if(getReadSize() < size)
+        throw std::out_of_range(" read size to larger!!!");
+    size_t bpos = m_readPosition % m_baseSize;
+    size_t npos = 0;
+    m_readPosition += size;
     while(size > 0)
     {
-        if(ncap >= size)
+        if(size >= m_baseSize - bpos)
         {
-            memcpy((char *)buf + bpos, m_cur->ptr + npos, size);
-            m_position += size;
-            if(m_cur->size == (npos + size))
-            {
-                m_cur = m_cur->next;
-            }
-            bpos += size;
-            size = 0;
+            memcpy((char *)buf + npos, m_readCur->ptr + bpos, m_baseSize - bpos);
+            m_readCur = m_readCur->next;
+            npos += m_baseSize - bpos;
+            size -= m_baseSize - bpos;
+            bpos = 0;
         }else{
-            memcpy((char *)buf + bpos, m_cur->ptr + npos, ncap);
-            m_position += ncap;
-            bpos += ncap;
-            size -= ncap;
-            npos = 0;
-            m_cur = m_cur->next;
-            ncap = m_cur->size;
+            memcpy((char *)buf + npos, m_readCur->ptr + bpos, size);
+            size = 0;
         }
     }
-
 }
 
-void ByteArray::setPosition(size_t v)
-{
-    if(v > m_size)
-    {
-        throw std::out_of_range("set_position out of ranger");
-        return;
-    }
-    m_position = v;
-    m_cur = m_root;
-    while(v >= m_baseSize)
-    {
-        v -= m_baseSize;
-        m_cur = m_cur->next;
-    }
-}
 
 bool ByteArray::writeToFile(const std::string &name) const
 {
@@ -487,13 +486,98 @@ void ByteArray::readFromFile(const std::string &name)
 
 }
 
-std::string toString()
+std::string ByteArray::toString()
 {
-    return std::string();
+    std::string str;
+    str.resize(getReadSize());
+    if(str.empty())
+        return str;
+    read(&str[0], str.size());
+    m_readPosition -= str.size();
+    return str;
 }
-std::string toHexString()
+std::string ByteArray::toHexString()
 {
-    return std::string();
+    std::string str = toString();
+    std::stringstream ss;
+
+    for(size_t i = 0; i < str.size(); ++i) {
+        if(i > 0 && i % 32 == 0) {
+            ss << std::endl;
+        }
+        ss << std::setw(2) << std::setfill('0') << std::hex
+           << (int)(uint8_t)str[i] << " ";
+    }
+
+    return ss.str();
 }
+
+void ByteArray::addCapacity(size_t size)
+{
+    if(m_capacity > m_writePosition + size)
+        return;
+    size_t capacity = m_writePosition + size;
+    while(m_capacity <= capacity)
+    {
+        m_tail->next = new Node(m_baseSize);
+        m_tail = m_tail->next;
+        m_capacity += m_baseSize;
+    }
+}
+uint64_t ByteArray::getReadBuffers(std::vector<iovec> &buffers, uint64_t len)
+{
+    if(len == 0 || len > getReadSize())
+        return 0;
+    uint64_t res = len;
+    size_t npos = m_readPosition % m_baseSize;
+    struct iovec iov;
+    Node *cur = m_readCur;
+    while(len > 0)
+    {
+        if(len >= m_baseSize - npos)
+        {
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = m_baseSize - npos;
+            len -= m_baseSize - npos;
+            cur = cur->next;
+            npos = 0;
+        }else{
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = len;
+            len = 0;
+        }
+        buffers.push_back(iov);
+    }
+    return res;
+}
+
+uint64_t ByteArray::getWriteBuffers(std::vector<iovec> &buffers, uint64_t len)
+{
+    if(len == 0)
+        return 0;
+    addCapacity(len);
+    uint64_t res = len;
+    size_t npos = m_writePosition % m_baseSize;
+    struct iovec iov;
+    Node *cur = m_writeCur;
+    while(len > 0)
+    {
+        if(len >= m_baseSize - npos)
+        {
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = m_baseSize - npos;
+            len -= m_baseSize - npos;
+            cur = cur->next;
+            npos = 0;
+        }else{
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = len;
+            len = 0;
+        }
+        buffers.push_back(iov);
+    }
+    return res;
+}
+
 
 }

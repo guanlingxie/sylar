@@ -19,11 +19,14 @@ public:
     HttpRequestParser();
     int isFinished();
     int hasError();
-    size_t execute(char *data, size_t len, size_t off);
+    size_t execute(char *data, size_t len, size_t off = 0);
 
     HttpRequest::ptr getRequest() const {return m_request;}
     void setError(int v){m_error = v;}
     uint64_t getContentLength();
+
+    static uint64_t GetHttpRequestBufferSize();
+    static uint64_t GetHttpRequestMaxBodysize();
 private:
     http_parser m_parser;
     HttpRequest::ptr m_request;

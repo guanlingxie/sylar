@@ -18,18 +18,44 @@ EchoServer::EchoServer(int type)
 {
     
 }
+
 void EchoServer::handleClient(sylar::Socket::ptr client)
 {
-    SYLAR_LOG_INFO(g_logger) << "handleClient" << client->toString();
-    sylar::ByteArray::ptr ba(new sylar::ByteArray);
+    //SYLAR_LOG_INFO(g_logger) << "handleClient" << client->toString();
+    sylar::ByteArray::ptr ba(new sylar::ByteArray(1));
     while(true)
     {
         ba->clear();
+        std::vector<iovec> iovs;
+        ba->setWritePosition(0);
+        ba->getWriteBuffers(iovs, 1024);        
         
+        //std::cout << iovs.size() << std::endl;
+
+        int rt = client->recv(&iovs[0], iovs.size());
+        if(rt <= 0)
+        {
+            SYLAR_LOG_INFO(g_logger) << "client is close ";
+            break;
+        }
+        ba->setWritePosition(ba->getWritePosition() + rt);
+        std::cout << ba->toString();
+        std::cout.flush();  
     }
+}
+
+
+void run()
+{
+    EchoServer::ptr es(new EchoServer(1));
+    auto addr = sylar::Address::LookupAny("0.0.0.0:8020");
+    es->bind(addr);
+    es->start();
 }
 
 int main()
 {
+    sylar::IOManager iom(2);
+    iom.schedule(run);
     return 0;
 }

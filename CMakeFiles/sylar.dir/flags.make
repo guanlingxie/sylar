@@ -44,3 +44,9 @@ CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/.
 
 # Custom defines: CMakeFiles/sylar.dir/sylar/tcp_server.cc.o_DEFINES = __FILE__="sylar/tcp_server.cc"
 
+# Custom defines: CMakeFiles/sylar.dir/sylar/stream.cc.o_DEFINES = __FILE__="sylar/stream.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/socket_stream.cc.o_DEFINES = __FILE__="sylar/socket_stream.cc"
+
+# Custom defines: CMakeFiles/sylar.dir/sylar/http/http_session.cc.o_DEFINES = __FILE__="sylar/http/http_session.cc"
+

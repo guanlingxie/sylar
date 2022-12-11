@@ -71,7 +71,7 @@ public:
     int recvFrom(void *buffer, size_t length, Address::ptr from, int flags = 0);
     int recvFrom(iovec *buffer, size_t length, Address::ptr from, int flags = 0);
 
-    Address::ptr getRomoteAddress();
+    Address::ptr getRemoteAddress();
     Address::ptr getLocalAddress();
 
     int getFamily() const {return m_family;}

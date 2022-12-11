@@ -27,6 +27,9 @@ set(LIB_SRC
     sylar/http/httpclient_parser.rl.cc
     sylar/http/http_parser.cc
     sylar/tcp_server.cc
+    sylar/stream.cc
+    sylar/socket_stream.cc
+    sylar/http/http_session.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -104,6 +107,11 @@ add_executable(test_tcpserver tests/test_tcpserver.cc)
 #add_dependencies(test_config sylar)
 force_redefine_file_macro_for_sources(test_tcpserver)
 target_link_libraries(test_tcpserver sylar ${LIB_LIB})
+
+add_executable(echo_server sylar/examples/echo_server.cc)
+#add_dependencies(test_config sylar)
+force_redefine_file_macro_for_sources(echo_server)
+target_link_libraries(echo_server sylar ${LIB_LIB})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

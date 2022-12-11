@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <string>
+#include <vector>
+#include <sys/socket.h>
 
 namespace sylar
 {
@@ -67,34 +69,43 @@ public:
     std::string readStringF32();
     std::string readStringF64();
     std::string readStringVint();
-
-    //inner function
-    void clear();
-    void write(const void *buf, size_t size);
-    void read(void *buf, size_t size);
-    size_t getPosition() const {return m_position;};
-    void setPosition(size_t v);
-
-    bool writeToFile(const std::string &name) const;
-    void readFromFile(const std::string &name);
-    size_t getBaseSize() const {return m_baseSize;}
-    size_t getReadSize() const {return m_size - m_position;}
-    bool isLittleEndian() const;
-    void setIsLittleEndian(bool val);
-
     std::string toString();
     std::string toHexString();
+
+    size_t getWritePosition() const {return m_writePosition;}
+    size_t getReadPosition() const {return m_readPosition;}
+    size_t getBaseSize() const {return m_baseSize;}
+    size_t getReadSize() const {return m_size - m_readPosition;}
+    size_t getSize() const {return m_size; }
+    
+    void clear();
+    void setReadPosition(size_t v);
+    void setWritePosition(size_t v);
+    
+    bool writeToFile(const std::string &name) const;
+    void readFromFile(const std::string &name);
+    size_t getCapacity() const {return m_capacity; }
+
+    uint64_t getWriteBuffers(std::vector<iovec> &buffers, uint64_t len);
+    uint64_t getReadBuffers(std::vector<iovec> &buffers, uint64_t len);
 private:
+    bool isLittleEndian() const;
+    void setIsLittleEndian(bool val);
+    void write(const void *buf, size_t size);
+    void read(void *buf, size_t size);
     void addCapacity(size_t size);
-    size_t getCapacity() const {return m_capacity - m_position;}
+    
 private:
     size_t m_baseSize;
-    size_t m_position;
+    size_t m_writePosition;
+    size_t m_readPosition;
     size_t m_capacity;
     size_t m_size;
     int8_t m_endian;
     Node *m_root;
-    Node *m_cur;
+    Node *m_readCur;
+    Node *m_writeCur;
+    Node *m_tail;
 };
 
 }

@@ -149,7 +149,7 @@ bool Socket::init(int sock)
         m_isConnected = true;
         initSock();
         getLocalAddress();
-        getRomoteAddress();
+        getRemoteAddress();
         return true;
     }
     return false;
@@ -208,7 +208,7 @@ bool Socket::connect(const Address::ptr addr, uint64_t timeout_ms)
     }
     m_isConnected = true;
     getLocalAddress();
-    getRomoteAddress();
+    getRemoteAddress();
     return true;
 }
 
@@ -328,7 +328,7 @@ int Socket::recvFrom(iovec *buffers, size_t length, Address::ptr from, int flags
     return -1;
 }
 
-Address::ptr Socket::getRomoteAddress()
+Address::ptr Socket::getRemoteAddress()
 {
     if(m_remoteAddress)
         return m_remoteAddress;

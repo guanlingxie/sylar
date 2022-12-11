@@ -7,14 +7,14 @@
 #IncludeRegexTransform: 
 
 /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc
-sylar/tcp_server.h
-/home/xitong/sylar/workspace/sylar/tests/sylar/tcp_server.h
 sylar/iomanager.h
 /home/xitong/sylar/workspace/sylar/tests/sylar/iomanager.h
 sylar/sylar.h
 /home/xitong/sylar/workspace/sylar/tests/sylar/sylar.h
 sylar/log.h
 /home/xitong/sylar/workspace/sylar/tests/sylar/log.h
+sylar/tcp_server.h
+/home/xitong/sylar/workspace/sylar/tests/sylar/tcp_server.h
 
 sylar/address.h
 memory
@@ -38,6 +38,10 @@ sylar/bytearray.h
 memory
 -
 string
+-
+vector
+-
+sys/socket.h
 -
 
 sylar/config.h

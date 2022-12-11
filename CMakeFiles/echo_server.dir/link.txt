@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/echo_server.dir/sylar/examples/echo_server.cc.o  -o bin/echo_server  -Wl,-rpath,/home/xitong/sylar/workspace/sylar/lib lib/libsylar.so -lpthread -lyaml-cpp -ldl 

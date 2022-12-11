@@ -6,9 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/xitong/sylar/workspace/sylar/tests/test_fiber.cc
+/home/xitong/sylar/workspace/sylar/sylar/examples/echo_server.cc
 sylar/sylar.h
-/home/xitong/sylar/workspace/sylar/tests/sylar/sylar.h
+/home/xitong/sylar/workspace/sylar/sylar/examples/sylar/sylar.h
+sylar/tcp_server.h
+/home/xitong/sylar/workspace/sylar/sylar/examples/sylar/tcp_server.h
+sylar/bytearray.h
+/home/xitong/sylar/workspace/sylar/sylar/examples/sylar/bytearray.h
 
 sylar/address.h
 memory
@@ -209,6 +213,22 @@ timer.h
 sylar/timer.h
 bytearray.h
 sylar/bytearray.h
+
+sylar/tcp_server.h
+memory
+-
+functional
+-
+vector
+-
+address.h
+sylar/address.h
+iomanager.h
+sylar/iomanager.h
+socket.h
+sylar/socket.h
+noncopyable.h
+sylar/noncopyable.h
 
 sylar/thread.h
 thread

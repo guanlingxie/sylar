@@ -37,6 +37,10 @@ memory
 -
 string
 -
+vector
+-
+sys/socket.h
+-
 
 sylar/config.h
 log.h
