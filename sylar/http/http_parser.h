@@ -24,6 +24,7 @@ public:
     HttpRequest::ptr getRequest() const {return m_request;}
     void setError(int v){m_error = v;}
     uint64_t getContentLength();
+    http_parser &getParser(){return m_parser;}
 
     static uint64_t GetHttpRequestBufferSize();
     static uint64_t GetHttpRequestMaxBodysize();
@@ -47,6 +48,10 @@ public:
     HttpResponse::ptr getResponse() const {return m_response;}
     void setError(int v){m_error = v;}
     uint64_t getContentLength();
+    httpclient_parser &getParser() {return m_parser;}
+
+    static uint64_t GetHttpResponseBufferSize();
+    static uint64_t GetHttpResponseMaxBodysize();
 private:
     httpclient_parser m_parser;
     HttpResponse::ptr m_response;

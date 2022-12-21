@@ -9,9 +9,15 @@ static sylar::ConfigVar<uint64_t>::ptr g_http_request_buffersize =
     sylar::Config::Lookup("http.request.buffersize",(uint64_t)(4 * 1024), "http request buffersize");
 static sylar::ConfigVar<uint64_t>::ptr g_http_request_max_bodysize = 
     sylar::Config::Lookup("http.request.max_bodysize", (uint64_t)(64 * 1024 * 1024), "http request max bodysize");
+static sylar::ConfigVar<uint64_t>::ptr g_http_response_buffersize = 
+    sylar::Config::Lookup("http.response.buffersize",(uint64_t)(4 * 1024), "http response buffersize");
+static sylar::ConfigVar<uint64_t>::ptr g_http_response_max_bodysize = 
+    sylar::Config::Lookup("http.response.max_bodysize", (uint64_t)(64 * 1024 * 1024), "http response max bodysize");
 
 static uint64_t s_http_request_buffersize;
 static uint64_t s_http_request_max_badysize;
+static uint64_t s_http_response_buffersize;
+static uint64_t s_http_response_max_badysize;
 
 
 namespace {
@@ -21,14 +27,26 @@ struct _RequestSizeIniter
     {
         s_http_request_buffersize = g_http_request_buffersize->getValue();
         s_http_request_max_badysize = g_http_request_max_bodysize->getValue();
+        s_http_response_buffersize = g_http_response_buffersize->getValue();
+        s_http_response_max_badysize = g_http_response_max_bodysize->getValue();
         g_http_request_buffersize->addListener([](const int64_t &oldvalue, const int64_t &newvalue){
-            SYLAR_LOG_INFO(g_logger) << "http request buffersize from" << oldvalue << " to " << newvalue;
+            SYLAR_LOG_INFO(g_logger) << "http request buffersize from " << oldvalue << " to " << newvalue;
 
             s_http_request_buffersize = newvalue;
         });
         g_http_request_max_bodysize->addListener([](const int64_t &oldvalue, const int64_t &newvalue){
-            SYLAR_LOG_INFO(g_logger) << "http request max bodysize from" << oldvalue << " to " << newvalue;
+            SYLAR_LOG_INFO(g_logger) << "http request max bodysize from " << oldvalue << " to " << newvalue;
             s_http_request_max_badysize = newvalue;
+        });
+
+        g_http_response_buffersize->addListener([](const int64_t &oldvalue, const int64_t &newvalue){
+            SYLAR_LOG_INFO(g_logger) << "http response buffersize from " << oldvalue << " to " << newvalue;
+
+            s_http_response_buffersize = newvalue;
+        });
+        g_http_response_max_bodysize->addListener([](const int64_t &oldvalue, const int64_t &newvalue){
+            SYLAR_LOG_INFO(g_logger) << "http response max bodysize from " << oldvalue << " to " << newvalue;
+            s_http_response_max_badysize = newvalue;
         });
     }
 };
@@ -44,9 +62,20 @@ uint64_t HttpRequestParser::GetHttpRequestBufferSize()
 {
     return s_http_request_buffersize;
 }
+
 uint64_t HttpRequestParser::GetHttpRequestMaxBodysize()
 {
     return s_http_request_max_badysize;
+}
+
+uint64_t HttpResponseParser::GetHttpResponseBufferSize()
+{
+    return s_http_response_buffersize;
+}
+
+uint64_t HttpResponseParser::GetHttpResponseMaxBodysize()
+{
+    return s_http_response_max_badysize;
 }
 
 void on_request_method(void *data, const char *at, size_t length)
@@ -111,7 +140,7 @@ void on_request_http_field(void *data, const char *field, size_t flen, const cha
     if(flen == 0)
     {
         SYLAR_LOG_WARN(g_logger) << "invalid http request field length = 0";
-        parser->setError(1002);
+        //parser->setError(1002);
         return;
     }
     parser->getRequest()->setHeader(std::string(field, flen), std::string(value, vlen));
@@ -167,7 +196,9 @@ void on_response_status(void *data, const char *at, size_t length)
 
 void on_response_chunk(void *data, const char *at, size_t length)
 {
-
+    // HttpResponseParser *parser = static_cast<HttpResponseParser *>(data);
+    // std::cout << std::string(at, length) << std::endl;
+    // std::cout << " in chunk:  " <<  parser->getParser().content_len << std::endl;
 }
 
 void on_response_version(void *data, const char *at, size_t length)
@@ -201,7 +232,7 @@ void on_response_http_field(void *data, const char *field, size_t flen, const ch
     if(flen == 0)
     {
         SYLAR_LOG_WARN(g_logger) << "invalid http request field length = 0";
-        parser->setError(1002);
+        //parser->setError(1002);
         return;
     }
     parser->getResponse()->setHeader(std::string(field, flen), std::string(value, vlen));
@@ -228,11 +259,10 @@ int HttpResponseParser::isFinished()
 }
 int HttpResponseParser::hasError()
 {
-    return m_error || httpclient_parser_finish(&m_parser);
+    return m_error || httpclient_parser_has_error(&m_parser);
 }
 size_t HttpResponseParser::execute(char *data, size_t len, size_t off)
 {
-    
     return httpclient_parser_execute(&m_parser, data, len, off);
 }
 

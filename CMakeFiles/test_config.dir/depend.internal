@@ -5,6 +5,7 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o
  /home/xitong/sylar/workspace/sylar/tests/test_config.cc
  sylar/config.h
  sylar/log.h
+ sylar/noncopyable.h
  sylar/singleton.h
  sylar/thread.h
  sylar/util.h

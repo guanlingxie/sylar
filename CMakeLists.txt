@@ -30,7 +30,13 @@ set(LIB_SRC
     sylar/stream.cc
     sylar/socket_stream.cc
     sylar/http/http_session.cc
+    sylar/http/http_server.cc
+    sylar/http/servlet.cc
+    sylar/http/http_connection.cc
+    sylar/uri.rl.cc
     )
+
+ragelmaker(sylar/uri.rl LIB_SRC ${CMAKE_CURRENT_SOURCE_DIR}/sylar)
 
 add_library(sylar SHARED ${LIB_SRC})
 force_redefine_file_macro_for_sources(sylar)
@@ -43,75 +49,58 @@ set(LIB_LIB
     dl
 )
 
-# add_executable(test_config tests/test_config.cc)
-# #add_dependencies(test_config sylar)
-# force_redefine_file_macro_for_sources(test_config)
-# target_link_libraries(test_config sylar ${LIB_LIB})
+# sylar_add_executable(test_config "tests/test_config.cc" sylar "${LIB_LIB}")
 
-# add_executable(test_thread tests/test_thread.cc)
-# #add_dependencies(test_config sylar)
-# force_redefine_file_macro_for_sources(test_thread)
-# target_link_libraries(test_thread sylar ${LIB_LIB})
+add_executable(test_thread tests/test_thread.cc)
+target_link_libraries(test_thread sylar ${LIB_LIB})
 
-# add_executable(test_util tests/test_util.cc)
-# #add_dependencies(test_config sylar)
-# force_redefine_file_macro_for_sources(test_util)
-# target_link_libraries(test_util sylar ${LIB_LIB})
+add_executable(test_util tests/test_util.cc)
+target_link_libraries(test_util sylar ${LIB_LIB})
 
 add_executable(test_fiber tests/test_fiber.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_fiber)
 target_link_libraries(test_fiber sylar ${LIB_LIB})
 
 add_executable(test_scheduler tests/test_scheduler.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_scheduler)
 target_link_libraries(test_scheduler sylar ${LIB_LIB})
 
 add_executable(test_iomanager tests/test_iomanager.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_iomanager)
 target_link_libraries(test_iomanager sylar ${LIB_LIB})
 
 add_executable(test_hook tests/test_hook.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_hook)
 target_link_libraries(test_hook sylar ${LIB_LIB})
 
 add_executable(test_address tests/test_address.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_address)
 target_link_libraries(test_address sylar ${LIB_LIB})
 
 add_executable(test_socket tests/test_socket.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_socket)
 target_link_libraries(test_socket sylar ${LIB_LIB})
 
 add_executable(test_bytearray tests/test_bytearray.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_bytearray)
 target_link_libraries(test_bytearray sylar ${LIB_LIB})
 
 add_executable(test_http tests/test_http.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_http)
 target_link_libraries(test_http sylar ${LIB_LIB})
 
 add_executable(test_httpparser tests/test_httpparser.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_httpparser)
 target_link_libraries(test_httpparser sylar ${LIB_LIB})
 
 add_executable(test_tcpserver tests/test_tcpserver.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(test_tcpserver)
 target_link_libraries(test_tcpserver sylar ${LIB_LIB})
 
 add_executable(echo_server sylar/examples/echo_server.cc)
-#add_dependencies(test_config sylar)
-force_redefine_file_macro_for_sources(echo_server)
 target_link_libraries(echo_server sylar ${LIB_LIB})
+
+add_executable(test_httpserver tests/test_httpserver.cc)
+target_link_libraries(test_httpserver sylar ${LIB_LIB})
+
+add_executable(test_httpconnection tests/test_httpconnection.cc)
+target_link_libraries(test_httpconnection sylar ${LIB_LIB})
+
+add_executable(test_httpclient.rl tests/test_httpclient.rl.cc)
+target_link_libraries(test_httpclient.rl sylar ${LIB_LIB})
+
+add_executable(test_uri tests/test_uri.cc)
+target_link_libraries(test_uri sylar ${LIB_LIB})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

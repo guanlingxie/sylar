@@ -68,6 +68,24 @@ CMakeFiles/sylar.dir/sylar/http/http11_parser.rl.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/http/http11_common.h
  /home/xitong/sylar/workspace/sylar/sylar/http/http11_parser.h
  /home/xitong/sylar/workspace/sylar/sylar/http/http11_parser.rl.cc
+CMakeFiles/sylar.dir/sylar/http/http_connection.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/http/http.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http11_common.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http11_parser.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_connection.cc
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_connection.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_parser.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/httpclient_parser.h
+ sylar/address.h
+ sylar/bytearray.h
+ sylar/log.h
+ sylar/noncopyable.h
+ sylar/singleton.h
+ sylar/socket.h
+ sylar/socket_stream.h
+ sylar/stream.h
+ sylar/thread.h
+ sylar/util.h
 CMakeFiles/sylar.dir/sylar/http/http_parser.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/http/http.h
  /home/xitong/sylar/workspace/sylar/sylar/http/http11_common.h
@@ -81,6 +99,27 @@ CMakeFiles/sylar.dir/sylar/http/http_parser.cc.o
  sylar/singleton.h
  sylar/thread.h
  sylar/util.h
+CMakeFiles/sylar.dir/sylar/http/http_server.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/http/http.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_server.cc
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_server.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_session.h
+ sylar/address.h
+ sylar/bytearray.h
+ sylar/fiber.h
+ sylar/http/servlet.h
+ sylar/iomanager.h
+ sylar/log.h
+ sylar/noncopyable.h
+ sylar/scheduler.h
+ sylar/singleton.h
+ sylar/socket.h
+ sylar/socket_stream.h
+ sylar/stream.h
+ sylar/tcp_server.h
+ sylar/thread.h
+ sylar/timer.h
+ sylar/util.h
 CMakeFiles/sylar.dir/sylar/http/http_session.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/http/http.h
  /home/xitong/sylar/workspace/sylar/sylar/http/http11_common.h
@@ -91,14 +130,31 @@ CMakeFiles/sylar.dir/sylar/http/http_session.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/http/httpclient_parser.h
  sylar/address.h
  sylar/bytearray.h
+ sylar/log.h
  sylar/noncopyable.h
+ sylar/singleton.h
  sylar/socket.h
  sylar/socket_stream.h
  sylar/stream.h
+ sylar/thread.h
+ sylar/util.h
 CMakeFiles/sylar.dir/sylar/http/httpclient_parser.rl.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/http/http11_common.h
  /home/xitong/sylar/workspace/sylar/sylar/http/httpclient_parser.h
  /home/xitong/sylar/workspace/sylar/sylar/http/httpclient_parser.rl.cc
+CMakeFiles/sylar.dir/sylar/http/servlet.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/http/http.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/http_session.h
+ /home/xitong/sylar/workspace/sylar/sylar/http/servlet.cc
+ /home/xitong/sylar/workspace/sylar/sylar/http/servlet.h
+ sylar/address.h
+ sylar/bytearray.h
+ sylar/noncopyable.h
+ sylar/socket.h
+ sylar/socket_stream.h
+ sylar/stream.h
+ sylar/thread.h
+ sylar/util.h
 CMakeFiles/sylar.dir/sylar/iomanager.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/fiber.h
  /home/xitong/sylar/workspace/sylar/sylar/iomanager.cc
@@ -185,6 +241,15 @@ CMakeFiles/sylar.dir/sylar/timer.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/thread.h
  /home/xitong/sylar/workspace/sylar/sylar/timer.cc
  /home/xitong/sylar/workspace/sylar/sylar/timer.h
+ /home/xitong/sylar/workspace/sylar/sylar/util.h
+CMakeFiles/sylar.dir/sylar/uri.rl.cc.o
+ /home/xitong/sylar/workspace/sylar/sylar/address.h
+ /home/xitong/sylar/workspace/sylar/sylar/log.h
+ /home/xitong/sylar/workspace/sylar/sylar/noncopyable.h
+ /home/xitong/sylar/workspace/sylar/sylar/singleton.h
+ /home/xitong/sylar/workspace/sylar/sylar/thread.h
+ /home/xitong/sylar/workspace/sylar/sylar/uri.h
+ /home/xitong/sylar/workspace/sylar/sylar/uri.rl.cc
  /home/xitong/sylar/workspace/sylar/sylar/util.h
 CMakeFiles/sylar.dir/sylar/util.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/fiber.h

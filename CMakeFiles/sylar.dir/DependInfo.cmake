@@ -12,9 +12,12 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/xitong/sylar/workspace/sylar/sylar/hook.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/hook.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/http/http.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/http.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/http/http11_parser.rl.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/http11_parser.rl.cc.o"
+  "/home/xitong/sylar/workspace/sylar/sylar/http/http_connection.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/http_connection.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/http/http_parser.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/http_parser.cc.o"
+  "/home/xitong/sylar/workspace/sylar/sylar/http/http_server.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/http_server.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/http/http_session.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/http_session.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/http/httpclient_parser.rl.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/httpclient_parser.rl.cc.o"
+  "/home/xitong/sylar/workspace/sylar/sylar/http/servlet.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/http/servlet.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/iomanager.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/iomanager.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/log.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/log.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/scheduler.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/scheduler.cc.o"
@@ -24,6 +27,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/xitong/sylar/workspace/sylar/sylar/tcp_server.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/tcp_server.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/thread.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/thread.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/timer.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/timer.cc.o"
+  "/home/xitong/sylar/workspace/sylar/sylar/uri.rl.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/uri.rl.cc.o"
   "/home/xitong/sylar/workspace/sylar/sylar/util.cc" "/home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir/sylar/util.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

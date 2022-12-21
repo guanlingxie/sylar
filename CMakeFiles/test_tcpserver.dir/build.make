@@ -63,15 +63,15 @@ include CMakeFiles/test_tcpserver.dir/flags.make
 CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.o: CMakeFiles/test_tcpserver.dir/flags.make
 CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.o: tests/test_tcpserver.cc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xitong/sylar/workspace/sylar/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) -D__FILE__=\"tests/test_tcpserver.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.o -c /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.o -c /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc
 
 CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"tests/test_tcpserver.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc > CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc > CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.i
 
 CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"tests/test_tcpserver.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc -o CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xitong/sylar/workspace/sylar/tests/test_tcpserver.cc -o CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.s
 
 # Object files for target test_tcpserver
 test_tcpserver_OBJECTS = \

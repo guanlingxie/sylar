@@ -22,6 +22,7 @@ IOManager::FdContext::EventContext &IOManager::FdContext::getContext(Event event
             SYLAR_ASSERT2(false,"getContext");
     }
 }
+
 void IOManager::FdContext::resetContext(EventContext &ctx)
 {
     ctx.scheduler = nullptr;
@@ -314,7 +315,7 @@ void IOManager::idle()
         int rt = 0;
         do{
             uint64_t next_timeout = getNextTimer();
-            static const int MAX_TIMEOUT = 3000;
+            static const int MAX_TIMEOUT = 30;
             if(next_timeout != ~0ull) {
                 next_timeout = (int)next_timeout > MAX_TIMEOUT
                                 ? MAX_TIMEOUT : next_timeout;

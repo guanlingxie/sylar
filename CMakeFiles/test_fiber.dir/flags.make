@@ -8,5 +8,3 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/. 
 
-# Custom defines: CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o_DEFINES = __FILE__="tests/test_fiber.cc"
-

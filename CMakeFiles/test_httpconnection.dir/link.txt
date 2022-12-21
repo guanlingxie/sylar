@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/test_httpconnection.dir/tests/test_httpconnection.cc.o  -o bin/test_httpconnection  -Wl,-rpath,/home/xitong/sylar/workspace/sylar/lib lib/libsylar.so -lpthread -lyaml-cpp -ldl 

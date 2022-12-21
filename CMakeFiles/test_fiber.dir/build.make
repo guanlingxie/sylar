@@ -63,15 +63,15 @@ include CMakeFiles/test_fiber.dir/flags.make
 CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o: CMakeFiles/test_fiber.dir/flags.make
 CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o: tests/test_fiber.cc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xitong/sylar/workspace/sylar/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o"
-	/usr/bin/c++  $(CXX_DEFINES) -D__FILE__=\"tests/test_fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o -c /home/xitong/sylar/workspace/sylar/tests/test_fiber.cc
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test_fiber.dir/tests/test_fiber.cc.o -c /home/xitong/sylar/workspace/sylar/tests/test_fiber.cc
 
 CMakeFiles/test_fiber.dir/tests/test_fiber.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test_fiber.dir/tests/test_fiber.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"tests/test_fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xitong/sylar/workspace/sylar/tests/test_fiber.cc > CMakeFiles/test_fiber.dir/tests/test_fiber.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xitong/sylar/workspace/sylar/tests/test_fiber.cc > CMakeFiles/test_fiber.dir/tests/test_fiber.cc.i
 
 CMakeFiles/test_fiber.dir/tests/test_fiber.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test_fiber.dir/tests/test_fiber.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) -D__FILE__=\"tests/test_fiber.cc\" $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xitong/sylar/workspace/sylar/tests/test_fiber.cc -o CMakeFiles/test_fiber.dir/tests/test_fiber.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xitong/sylar/workspace/sylar/tests/test_fiber.cc -o CMakeFiles/test_fiber.dir/tests/test_fiber.cc.s
 
 # Object files for target test_fiber
 test_fiber_OBJECTS = \

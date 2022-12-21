@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/xitong/sylar/workspace/sylar/tests/test_httpclient.rl.cc
+sylar/http/httpclient_parser.h
+/home/xitong/sylar/workspace/sylar/tests/sylar/http/httpclient_parser.h
+sylar/http/http11_parser.h
+/home/xitong/sylar/workspace/sylar/tests/sylar/http/http11_parser.h
+string
+-
+iostream
+-
+
+sylar/http/http11_common.h
+sys/types.h
+-
+
+sylar/http/http11_parser.h
+http11_common.h
+sylar/http/http11_common.h
+
+sylar/http/httpclient_parser.h
+http11_common.h
+sylar/http/http11_common.h
+

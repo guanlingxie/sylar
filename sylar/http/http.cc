@@ -100,6 +100,13 @@ std::string HttpRequest::getCookie(const std::string &key, const std::string &de
 
 void HttpRequest::setHeader(const std::string &key, const std::string &value)
 {
+    if(::strcasecmp(key.c_str(), "connection") == 0)
+    {
+        if(::strcasecmp(value.c_str(), "close") == 0)
+            setClose(true);
+        else if(::strcasecmp(value.c_str(), "keep-alive") == 0)
+            setClose(false);
+    }
     m_headers[key] = value;
 }
 void HttpRequest::setParam(const std::string &key, const std::string &value)
@@ -248,18 +255,15 @@ std::ostream &HttpResponse::dump(std::ostream &os)
     
     for(auto &i : m_headers)
     {
-        if(strcasecmp(i.first.c_str(), "connection") == 0)
+        if(strcasecmp(i.first.c_str(), "connection") == 0 || strcasecmp(i.first.c_str(), "connection-length") == 0)
             continue;
         os  << i.first 
             << ":"
             << i.second << "\r\n";
     }
-    os << "connection:" << (m_close ? "close" : "keep-alive") << "\r\n";
-    if(!m_body.empty())
-    {
-        os << "connection-length: " << m_body.size() << "\r\n";
-    }
-    os << "\r\n" << m_body;
+    os  << "connection:" << (m_close ? "close" : "keep-alive") << "\r\n"
+        << "connection-length: " << m_body.size() << "\r\n"
+        << "\r\n" << m_body;
     return os;
 }
 

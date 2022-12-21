@@ -10,7 +10,7 @@ namespace sylar{
 namespace http{
 class HttpSession : public SocketStream
 {
-private:
+public:
     typedef std::shared_ptr<HttpSession> ptr;
     HttpSession(Socket::ptr sock, bool owner = true);
     HttpRequest::ptr recvRequest();

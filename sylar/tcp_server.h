@@ -27,7 +27,7 @@ public:
     uint64_t getReadTimeout() const { return m_readTimeout;}
     std::string getName() const {return m_name;}
     void setReadTimeOut(uint64_t v){m_readTimeout = v;}
-    void setName(const std::string &v){m_name = v;}
+    virtual void setName(const std::string &v){m_name = v;}
     bool isStop() const {return m_isStop;}
 protected:
     virtual void handleClient(Socket::ptr client);

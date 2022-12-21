@@ -8,5 +8,3 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/. 
 
-# Custom defines: CMakeFiles/test_scheduler.dir/tests/test_scheduler.cc.o_DEFINES = __FILE__="tests/test_scheduler.cc"
-

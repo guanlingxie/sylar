@@ -8,5 +8,3 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/xitong/sylar/workspace/sylar/. 
 
-# Custom defines: CMakeFiles/test_tcpserver.dir/tests/test_tcpserver.cc.o_DEFINES = __FILE__="tests/test_tcpserver.cc"
-
