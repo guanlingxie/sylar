@@ -85,6 +85,7 @@ CMakeFiles/sylar.dir/sylar/http/http_connection.cc.o
  sylar/socket_stream.h
  sylar/stream.h
  sylar/thread.h
+ sylar/uri.h
  sylar/util.h
 CMakeFiles/sylar.dir/sylar/http/http_parser.cc.o
  /home/xitong/sylar/workspace/sylar/sylar/http/http.h

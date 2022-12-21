@@ -129,6 +129,8 @@ sylar/socket.h
 sylar/http/sylar/socket.h
 http.h
 sylar/http/http.h
+sylar/uri.h
+sylar/http/sylar/uri.h
 
 sylar/iomanager.h
 scheduler.h
@@ -279,6 +281,18 @@ util.h
 sylar/util.h
 thread.h
 sylar/thread.h
+
+sylar/uri.h
+log.h
+sylar/log.h
+memory
+-
+string
+-
+stdint.h
+-
+address.h
+sylar/address.h
 
 sylar/util.h
 pthread.h

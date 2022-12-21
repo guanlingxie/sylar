@@ -23,4 +23,5 @@ CMakeFiles/test_httpconnection.dir/tests/test_httpconnection.cc.o
  sylar/sylar.h
  sylar/thread.h
  sylar/timer.h
+ sylar/uri.h
  sylar/util.h
