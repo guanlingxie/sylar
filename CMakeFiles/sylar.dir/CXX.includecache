@@ -35,6 +35,8 @@ http_parser.h
 /home/xitong/sylar/workspace/sylar/sylar/http/http_parser.h
 sylar/log.h
 /home/xitong/sylar/workspace/sylar/sylar/http/sylar/log.h
+functional
+-
 
 /home/xitong/sylar/workspace/sylar/sylar/http/http_connection.h
 sylar/socket_stream.h
@@ -45,6 +47,16 @@ http.h
 /home/xitong/sylar/workspace/sylar/sylar/http/http.h
 sylar/uri.h
 /home/xitong/sylar/workspace/sylar/sylar/http/sylar/uri.h
+sylar/thread.h
+/home/xitong/sylar/workspace/sylar/sylar/http/sylar/thread.h
+string
+-
+list
+-
+memory
+-
+atomic
+-
 
 /home/xitong/sylar/workspace/sylar/sylar/http/http_parser.h
 memory

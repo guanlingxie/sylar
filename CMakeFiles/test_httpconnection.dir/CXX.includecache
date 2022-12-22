@@ -131,6 +131,16 @@ http.h
 sylar/http/http.h
 sylar/uri.h
 sylar/http/sylar/uri.h
+sylar/thread.h
+sylar/http/sylar/thread.h
+string
+-
+list
+-
+memory
+-
+atomic
+-
 
 sylar/iomanager.h
 scheduler.h

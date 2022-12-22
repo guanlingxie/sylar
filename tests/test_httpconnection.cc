@@ -54,10 +54,22 @@ void test_connection_static()
     res->response->dump(std::cout);
 }
 
+void test_pool() {
+    sylar::http::HttpConnectionPool::ptr pool(new sylar::http::HttpConnectionPool(
+                "www.sylar.top", "", 80, 10, 1000 * 2, 5));
+
+    sylar::IOManager::GetThis()->addTimer(1000, [pool](){
+            auto r = pool->doGet("/", 300);
+            r->response->dump(std::cout);
+    }, true);
+}
+
+
+
 int main()
 {
     sylar::IOManager iom(2);
-    iom.schedule(test_connection_static);
+    iom.schedule(test_pool);
     iom.start();
     return 0;
 }

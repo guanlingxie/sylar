@@ -5,10 +5,17 @@
 #include "sylar/socket.h"
 #include "http.h"
 #include "sylar/uri.h"
+#include "sylar/thread.h"
+
+#include <string>
+#include <list>
+#include <memory>
+#include <atomic>
 
 
 namespace sylar{
 namespace http{
+
 
 struct HttpResult{
     typedef std::shared_ptr<HttpResult> ptr;
@@ -44,8 +51,11 @@ struct HttpResult{
     std::string error;
 };
 
+
+class HttpConnectionPool;
 class HttpConnection : public SocketStream
 {
+friend class HttpConnectionPool;
 public:
     typedef std::shared_ptr<HttpConnection> ptr;
 
@@ -91,7 +101,53 @@ public:
     
 
 private:
+    uint64_t m_createTime = 0;
+    uint64_t m_request = 0;
+};
+
+class HttpConnectionPool
+{
+public:
+    typedef std::shared_ptr<HttpConnectionPool> ptr;
+    typedef Mutex MutexType;
+    HttpConnectionPool(const std::string &host
+                        ,const std::string &vhost
+                        ,uint32_t port
+                        ,uint32_t maxsize 
+                        ,uint32_t maxAlivetime
+                        ,uint32_t maxRequest);
+
+    HttpConnection::ptr getConnection();
+    static void ReleasePtr(HttpConnection* ptr, HttpConnectionPool* pool);
+    HttpResult::ptr doGet(const std::string &path_query_fragment
+                            , uint64_t timeout_ms
+                            , const std::map<std::string, std::string> &headers = {} 
+                            , const std::string &body = "");
+    HttpResult::ptr doPost(const std::string &path_query_fragment
+                            , uint64_t timeout_ms
+                            , const std::map<std::string, std::string> &headers = {} 
+                            , const std::string &body = "");
     
+    HttpResult::ptr doRequest(HttpMethod method
+                            , const std::string &path_query_fragment
+                            , uint64_t timeout_ms
+                            , const std::map<std::string, std::string> &headers = {} 
+                            , const std::string &body = "");
+    HttpResult::ptr doRequest(HttpRequest::ptr req,
+                            uint64_t timeout_ms);
+
+
+private:
+    std::string m_host;
+    std::string m_vhost;
+    uint32_t m_port;
+    uint32_t m_maxsize;
+    uint32_t m_maxAliveTime;
+    uint32_t m_maxRequest;
+
+    MutexType m_mutex;
+    std::list<HttpConnection *> m_conns;
+    std::atomic<int32_t> m_total = {0};
 };
 
 }
