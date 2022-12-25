@@ -3,9 +3,10 @@
 #include <iostream>
 #include <fstream>
 
-static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
+sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
 void test_connection()
 {
+    g_logger->setLevel(sylar::LogLevel::ERROR);
     sylar::Address::ptr addr = sylar::IPAddress::LookupAnyIPAddress("www.sylar.top:80");
     if(!addr)
     {
@@ -20,7 +21,7 @@ void test_connection()
     
     sylar::http::HttpConnection::ptr con(new sylar::http::HttpConnection(sock));
     sylar::http::HttpRequest::ptr req(new sylar::http::HttpRequest);
-    req->setPath("/blog/");
+    req->setPath("/blog");
     req->setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
     req->setHeader("Accept-Encoding","deflate, br");
     req->setHeader("Accept-Language", "zh-CN,zh;q=0.9");
@@ -69,7 +70,7 @@ void test_pool() {
 int main()
 {
     sylar::IOManager iom(2);
-    iom.schedule(test_pool);
+    iom.schedule(test_connection);
     iom.start();
     return 0;
 }

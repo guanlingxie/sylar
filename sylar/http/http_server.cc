@@ -21,7 +21,8 @@ void HttpServer::setName(const std::string& v) {
 }
 
 void HttpServer::handleClient(Socket::ptr client) {
-    SYLAR_LOG_INFO(g_logger) << "address:" << client->getRemoteAddress()->toString();
+    SYLAR_LOG_DEBUG(g_logger) << "address:" << client->getRemoteAddress()->toString();
+    
     HttpSession::ptr session(new HttpSession(client));
     do {
         
@@ -30,14 +31,15 @@ void HttpServer::handleClient(Socket::ptr client) {
             SYLAR_LOG_WARN(g_logger) << "recv http request fail, errno = " << strerror(errno);
             break;
         }
-
+        std::cout << "httpserver.cc 25 : " << g_logger->getLevel() << std::endl;
+        SYLAR_LOG_DEBUG(g_logger) << "req:close : " << req->isClose() ? "close" : "keep-alive";
         HttpResponse::ptr rsp(new HttpResponse(req->getVersion()
-                            ,req->isClose() || !m_isKeepalive));
+                            , req->isClose() || !m_isKeepalive));
         // rsp->setHeader("Server", getName());
         // rsp->setBody("hello xitong");
         
 
-        req->dump(std::cout);
+        //req->dump(std::cout);
         //rsp->dump(std::cout);
         // std::cout << std::endl;
         m_dispatch->dispatch(req, rsp, session);

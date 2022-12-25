@@ -244,6 +244,19 @@ test_scheduler/fast:
 .PHONY : test_scheduler/fast
 
 #=============================================================================
+# Target rules for targets named testhttp_server
+
+# Build rule for target.
+testhttp_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 testhttp_server
+.PHONY : testhttp_server
+
+# fast build rule for target.
+testhttp_server/fast:
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/build
+.PHONY : testhttp_server/fast
+
+#=============================================================================
 # Target rules for targets named test_iomanager
 
 # Build rule for target.
@@ -454,6 +467,33 @@ sylar/examples/echo_server.s: sylar/examples/echo_server.cc.s
 sylar/examples/echo_server.cc.s:
 	$(MAKE) -f CMakeFiles/echo_server.dir/build.make CMakeFiles/echo_server.dir/sylar/examples/echo_server.cc.s
 .PHONY : sylar/examples/echo_server.cc.s
+
+sylar/examples/testhttp_server.o: sylar/examples/testhttp_server.cc.o
+
+.PHONY : sylar/examples/testhttp_server.o
+
+# target to build an object file
+sylar/examples/testhttp_server.cc.o:
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/sylar/examples/testhttp_server.cc.o
+.PHONY : sylar/examples/testhttp_server.cc.o
+
+sylar/examples/testhttp_server.i: sylar/examples/testhttp_server.cc.i
+
+.PHONY : sylar/examples/testhttp_server.i
+
+# target to preprocess a source file
+sylar/examples/testhttp_server.cc.i:
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/sylar/examples/testhttp_server.cc.i
+.PHONY : sylar/examples/testhttp_server.cc.i
+
+sylar/examples/testhttp_server.s: sylar/examples/testhttp_server.cc.s
+
+.PHONY : sylar/examples/testhttp_server.s
+
+# target to generate assembly for a file
+sylar/examples/testhttp_server.cc.s:
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/sylar/examples/testhttp_server.cc.s
+.PHONY : sylar/examples/testhttp_server.cc.s
 
 sylar/fd_manager.o: sylar/fd_manager.cc.o
 
@@ -1499,6 +1539,7 @@ help:
 	@echo "... test_fiber"
 	@echo "... test_address"
 	@echo "... test_scheduler"
+	@echo "... testhttp_server"
 	@echo "... test_iomanager"
 	@echo "... test_httpparser"
 	@echo "... test_socket"
@@ -1519,6 +1560,9 @@ help:
 	@echo "... sylar/examples/echo_server.o"
 	@echo "... sylar/examples/echo_server.i"
 	@echo "... sylar/examples/echo_server.s"
+	@echo "... sylar/examples/testhttp_server.o"
+	@echo "... sylar/examples/testhttp_server.i"
+	@echo "... sylar/examples/testhttp_server.s"
 	@echo "... sylar/fd_manager.o"
 	@echo "... sylar/fd_manager.i"
 	@echo "... sylar/fd_manager.s"

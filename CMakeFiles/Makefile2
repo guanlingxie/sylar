@@ -66,6 +66,7 @@ all: CMakeFiles/test_httpclient.rl.dir/all
 all: CMakeFiles/test_fiber.dir/all
 all: CMakeFiles/test_address.dir/all
 all: CMakeFiles/test_scheduler.dir/all
+all: CMakeFiles/testhttp_server.dir/all
 all: CMakeFiles/test_iomanager.dir/all
 all: CMakeFiles/test_httpparser.dir/all
 all: CMakeFiles/test_socket.dir/all
@@ -93,6 +94,7 @@ clean: CMakeFiles/test_httpclient.rl.dir/clean
 clean: CMakeFiles/test_fiber.dir/clean
 clean: CMakeFiles/test_address.dir/clean
 clean: CMakeFiles/test_scheduler.dir/clean
+clean: CMakeFiles/testhttp_server.dir/clean
 clean: CMakeFiles/test_iomanager.dir/clean
 clean: CMakeFiles/test_httpparser.dir/clean
 clean: CMakeFiles/test_socket.dir/clean
@@ -373,6 +375,33 @@ test_scheduler: CMakeFiles/test_scheduler.dir/rule
 CMakeFiles/test_scheduler.dir/clean:
 	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/clean
 .PHONY : CMakeFiles/test_scheduler.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/testhttp_server.dir
+
+# All Build rule for target.
+CMakeFiles/testhttp_server.dir/all: CMakeFiles/sylar.dir/all
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/depend
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/xitong/sylar/workspace/sylar/CMakeFiles --progress-num=62,63 "Built target testhttp_server"
+.PHONY : CMakeFiles/testhttp_server.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/testhttp_server.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xitong/sylar/workspace/sylar/CMakeFiles 29
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/testhttp_server.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xitong/sylar/workspace/sylar/CMakeFiles 0
+.PHONY : CMakeFiles/testhttp_server.dir/rule
+
+# Convenience name for target.
+testhttp_server: CMakeFiles/testhttp_server.dir/rule
+
+.PHONY : testhttp_server
+
+# clean rule for target.
+CMakeFiles/testhttp_server.dir/clean:
+	$(MAKE) -f CMakeFiles/testhttp_server.dir/build.make CMakeFiles/testhttp_server.dir/clean
+.PHONY : CMakeFiles/testhttp_server.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/test_iomanager.dir

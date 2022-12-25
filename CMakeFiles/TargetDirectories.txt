@@ -10,6 +10,7 @@
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_fiber.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_address.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_scheduler.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/testhttp_server.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_iomanager.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_httpparser.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_socket.dir

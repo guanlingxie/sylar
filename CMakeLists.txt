@@ -90,6 +90,9 @@ target_link_libraries(test_tcpserver sylar ${LIB_LIB})
 add_executable(echo_server sylar/examples/echo_server.cc)
 target_link_libraries(echo_server sylar ${LIB_LIB})
 
+add_executable(testhttp_server sylar/examples/testhttp_server.cc)
+target_link_libraries(testhttp_server sylar ${LIB_LIB})
+
 add_executable(test_httpserver tests/test_httpserver.cc)
 target_link_libraries(test_httpserver sylar ${LIB_LIB})
 
