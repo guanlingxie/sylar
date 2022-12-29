@@ -140,6 +140,19 @@ test_httpserver/fast:
 .PHONY : test_httpserver/fast
 
 #=============================================================================
+# Target rules for targets named ab_testhttp_server
+
+# Build rule for target.
+ab_testhttp_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ab_testhttp_server
+.PHONY : ab_testhttp_server
+
+# fast build rule for target.
+ab_testhttp_server/fast:
+	$(MAKE) -f CMakeFiles/ab_testhttp_server.dir/build.make CMakeFiles/ab_testhttp_server.dir/build
+.PHONY : ab_testhttp_server/fast
+
+#=============================================================================
 # Target rules for targets named echo_server
 
 # Build rule for target.
@@ -440,6 +453,33 @@ sylar/config.s: sylar/config.cc.s
 sylar/config.cc.s:
 	$(MAKE) -f CMakeFiles/sylar.dir/build.make CMakeFiles/sylar.dir/sylar/config.cc.s
 .PHONY : sylar/config.cc.s
+
+sylar/examples/ab_testhttp_server.o: sylar/examples/ab_testhttp_server.cc.o
+
+.PHONY : sylar/examples/ab_testhttp_server.o
+
+# target to build an object file
+sylar/examples/ab_testhttp_server.cc.o:
+	$(MAKE) -f CMakeFiles/ab_testhttp_server.dir/build.make CMakeFiles/ab_testhttp_server.dir/sylar/examples/ab_testhttp_server.cc.o
+.PHONY : sylar/examples/ab_testhttp_server.cc.o
+
+sylar/examples/ab_testhttp_server.i: sylar/examples/ab_testhttp_server.cc.i
+
+.PHONY : sylar/examples/ab_testhttp_server.i
+
+# target to preprocess a source file
+sylar/examples/ab_testhttp_server.cc.i:
+	$(MAKE) -f CMakeFiles/ab_testhttp_server.dir/build.make CMakeFiles/ab_testhttp_server.dir/sylar/examples/ab_testhttp_server.cc.i
+.PHONY : sylar/examples/ab_testhttp_server.cc.i
+
+sylar/examples/ab_testhttp_server.s: sylar/examples/ab_testhttp_server.cc.s
+
+.PHONY : sylar/examples/ab_testhttp_server.s
+
+# target to generate assembly for a file
+sylar/examples/ab_testhttp_server.cc.s:
+	$(MAKE) -f CMakeFiles/ab_testhttp_server.dir/build.make CMakeFiles/ab_testhttp_server.dir/sylar/examples/ab_testhttp_server.cc.s
+.PHONY : sylar/examples/ab_testhttp_server.cc.s
 
 sylar/examples/echo_server.o: sylar/examples/echo_server.cc.o
 
@@ -1531,6 +1571,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... test_uri"
 	@echo "... test_httpserver"
+	@echo "... ab_testhttp_server"
 	@echo "... echo_server"
 	@echo "... test_thread"
 	@echo "... sylar"
@@ -1557,6 +1598,9 @@ help:
 	@echo "... sylar/config.o"
 	@echo "... sylar/config.i"
 	@echo "... sylar/config.s"
+	@echo "... sylar/examples/ab_testhttp_server.o"
+	@echo "... sylar/examples/ab_testhttp_server.i"
+	@echo "... sylar/examples/ab_testhttp_server.s"
 	@echo "... sylar/examples/echo_server.o"
 	@echo "... sylar/examples/echo_server.i"
 	@echo "... sylar/examples/echo_server.s"

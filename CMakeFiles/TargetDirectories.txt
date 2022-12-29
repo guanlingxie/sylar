@@ -2,6 +2,7 @@
 /home/xitong/sylar/workspace/sylar/CMakeFiles/edit_cache.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_uri.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_httpserver.dir
+/home/xitong/sylar/workspace/sylar/CMakeFiles/ab_testhttp_server.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/echo_server.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/test_thread.dir
 /home/xitong/sylar/workspace/sylar/CMakeFiles/sylar.dir

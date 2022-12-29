@@ -41,8 +41,7 @@ bool TcpServer::bind(Address::ptr addr)
         SYLAR_LOG_ERROR(g_logger) << "listen fail errno = " << strerror(errno) << "address is " << addr->toString();
         return false; 
     }
-    SYLAR_LOG_DEBUG(g_logger) << "server bind success";
-    sock->dump(std::cout);
+    //SYLAR_LOG_DEBUG(g_logger) << "server bind success";
     m_socks.push_back(sock);
     return true;
 }
@@ -66,7 +65,7 @@ bool TcpServer::start()
     if(!m_isStop)
         return true;
     m_isStop = false;
-    SYLAR_LOG_DEBUG(g_logger) << "m_socks size = " << m_socks.size();
+    //SYLAR_LOG_DEBUG(g_logger) << "m_socks size = " << m_socks.size();
     for(auto &sock : m_socks)
     {
         m_acceptWorker->schedule(std::bind(&TcpServer::startAccept, shared_from_this(), sock));

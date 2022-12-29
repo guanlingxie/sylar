@@ -16,9 +16,9 @@ Scheduler::Scheduler(size_t threads, bool use_caller, const std::string &name)
     SYLAR_ASSERT(threads > 0);
     if(use_caller)
     {
-        sylar::Fiber::GetThis(); //Fiber::t_threadFiber
+        sylar::Fiber::GetThis();  //Fiber::t_threadFiber
         --threads;
-        SYLAR_ASSERT(GetThis() == nullptr);
+        //SYLAR_ASSERT(GetThis() == nullptr);
         t_scheduler = this;
 
         m_rootFiber.reset(new Fiber(std::bind(&Scheduler::run,this) ,0 , true));

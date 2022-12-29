@@ -18,7 +18,7 @@ int32_t FunctionServlet::handle(HttpRequest::ptr req, HttpResponse::ptr rsp, Htt
 
 ServletDispatch::ServletDispatch()
 {
-    m_default.reset(new NotFoundServlet("sylar/1.0"));
+    m_default.reset(new NotFoundServlet("xitong/1.0"));
 }
 
 void ServletDispatch::addServlet(const std::string& uri, Servlet::ptr slt)
@@ -110,7 +110,7 @@ NotFoundServlet::NotFoundServlet(const std::string& name)
     ,m_name(name) {
     m_content = "<html><head><title>404 Not Found"
         "</title></head><body><center><h1>404 Not Found</h1></center>"
-        "<hr><center>" + name + "</center></body></html>";
+        "<hr><center>" + name + "azxscdvfbgnhmjklpoiuytrew</center></body></html>";
 
 }
 
@@ -118,7 +118,7 @@ int32_t NotFoundServlet::handle(sylar::http::HttpRequest::ptr request
                    , sylar::http::HttpResponse::ptr response
                    , sylar::http::HttpSession::ptr session) {
     response->setStatus(sylar::http::HttpStatus::NOT_FOUND);
-    response->setHeader("Server", "sylar/1.0.0");
+    response->setHeader("Server", "xitong/1.0.0");
     response->setHeader("Content-Type", "text/html");
     response->setBody(m_content);
     return 0;

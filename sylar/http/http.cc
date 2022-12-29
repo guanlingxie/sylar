@@ -222,6 +222,7 @@ void HttpResponse::setHeader(const std::string &key, const std::string &value)
 {
     m_headers[key] = value;
 }
+
 void HttpResponse::delHead(const std::string &key)
 {
     auto it = m_headers.find(key);
